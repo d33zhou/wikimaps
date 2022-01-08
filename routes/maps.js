@@ -63,8 +63,26 @@ const mapsRouter = (db) => {
       });
   });
 
-  // POST /maps/
+  // POST /maps/create
+  router.post('/create', (req, res) => {
+    const queryString = `
+      INSERT INTO maps (creator_id, title, description)
+      VALUES ($1, $2, $3)
+      RETURNING id;`
+    const values = [req.body.id, req.body.title, req.body.description]; // need body parser npm
 
+    db.query(queryString, values)
+      .then(res => {
+        res
+          .status(200)
+          .send("Added!");
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
 
   return router;
 };
