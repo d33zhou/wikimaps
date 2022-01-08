@@ -5,6 +5,7 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
+const { query } = require('express');
 const express = require('express');
 const router  = express.Router();
 
@@ -12,7 +13,11 @@ const mapsRouter = (db) => {
 
   // GET /maps/
   router.get('/', (req, res) => {
-    db.query('SELECT * FROM maps;')
+    const queryString = `
+      SELECT * FROM maps;
+      `;
+
+    db.query(queryString)
       .then(res => {
         res.json(res.rows);
       })
@@ -25,7 +30,11 @@ const mapsRouter = (db) => {
 
   // GET /maps/create
   router.get('/create', (req, res) => {
-    db.query('SELECT * FROM maps;')
+    const queryString = `
+      SELECT * FROM maps;
+      `;
+
+    db.query(queryString)
       .then(res => {
         res.json(res.rows);
       })
@@ -38,7 +47,12 @@ const mapsRouter = (db) => {
 
   // GET /maps/:id
   router.get('/:id', (req, res) => {
-    db.query('SELECT * FROM maps WHERE id = $1;', [req.params.id])
+    const queryString = `
+      SELECT * FROM maps
+      WHERE id = $1;
+      `;
+
+    db.query(queryString, [req.params.id])
       .then(res => {
         res.json(res.rows[0]);
       })
@@ -50,6 +64,7 @@ const mapsRouter = (db) => {
   });
 
   // POST /maps/
+
 
   return router;
 };

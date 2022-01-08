@@ -12,7 +12,11 @@ const userRouter = (db) => {
 
   // GET /users/favourites
   router.get('/favourites', (req, res) => {
-    db.query('SELECT * FROM users;')
+    const queryString = `
+      SELECT * FROM users;
+      `;
+
+    db.query(queryString)
       .then(res => {
         res.json(res.rows);
       })
@@ -25,7 +29,11 @@ const userRouter = (db) => {
 
   // GET /users/contributions
   router.get('/contributions', (req, res) => {
-    db.query('SELECT * FROM users;')
+    const queryString = `
+      SELECT * FROM users;
+      `;
+
+    db.query(queryString)
       .then(res => {
         res.json(res.rows);
       })
@@ -38,7 +46,11 @@ const userRouter = (db) => {
 
   // GET /users/login
   router.get('/login', (req, res) => {
-    db.query('SELECT * FROM users;')
+    const queryString = `
+      SELECT * FROM users;
+      `;
+
+    db.query(queryString)
       .then(res => {
         res.json(res.rows);
       })
@@ -51,7 +63,11 @@ const userRouter = (db) => {
 
   // GET /users/logout
   router.get('/logout', (req, res) => {
-    db.query('SELECT * FROM users;')
+    const queryString = `
+      SELECT * FROM users;
+      `;
+
+    db.query(queryString)
       .then(res => {
         res.json(res.rows);
       })
@@ -64,7 +80,11 @@ const userRouter = (db) => {
 
   // GET /users/register
   router.get('/register', (req, res) => {
-    db.query('SELECT * FROM users;')
+    const queryString = `
+      SELECT * FROM users;
+      `;
+
+    db.query(queryString)
       .then(res => {
         res.json(res.rows);
       })
