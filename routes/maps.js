@@ -30,19 +30,9 @@ const mapsRouter = (db) => {
 
   // GET /maps/create
   router.get('/create', (req, res) => {
-    const queryString = `
-      SELECT * FROM maps;
-      `;
-
-    db.query(queryString)
-      .then(res => {
-        res.json(res.rows);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    res
+      .status(200)
+      .send("Create a new map here");
   });
 
   // GET /maps/:id
