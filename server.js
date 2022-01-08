@@ -39,7 +39,8 @@ const usersRoutes = require("./routes/users");
 const mapsRoutes = require("./routes/maps");
 
 // Redirections for route paths
-app.use('/maps', mapsRoutes);
+app.use('/users', usersRoutes(db));
+app.use('/maps', mapsRoutes(db));
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own

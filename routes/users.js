@@ -17,7 +17,9 @@ const userRouter = (db) => {
         res.json(res.rows);
       })
       .catch(err => {
-        console.log(err.message);
+        res
+          .status(500)
+          .json({ error: err.message });
       });
   });
 
@@ -28,7 +30,9 @@ const userRouter = (db) => {
         res.json(res.rows);
       })
       .catch(err => {
-        console.log(err.message);
+        res
+          .status(500)
+          .json({ error: err.message });
       });
   });
 
@@ -39,7 +43,9 @@ const userRouter = (db) => {
         res.json(res.rows);
       })
       .catch(err => {
-        console.log(err.message);
+        res
+          .status(500)
+          .json({ error: err.message });
       });
   });
 
@@ -50,7 +56,9 @@ const userRouter = (db) => {
         res.json(res.rows);
       })
       .catch(err => {
-        console.log(err.message);
+        res
+          .status(500)
+          .json({ error: err.message });
       });
   });
 
@@ -61,7 +69,9 @@ const userRouter = (db) => {
         res.json(res.rows);
       })
       .catch(err => {
-        console.log(err.message);
+        res
+          .status(500)
+          .json({ error: err.message });
       });
   });
 

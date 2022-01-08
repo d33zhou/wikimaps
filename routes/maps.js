@@ -17,7 +17,22 @@ const mapsRouter = (db) => {
         res.json(res.rows);
       })
       .catch(err => {
-        console.log(err.message);
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  // GET /maps/create
+  router.get('/create', (req, res) => {
+    db.query('SELECT * FROM maps;')
+      .then(res => {
+        res.json(res.rows);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
       });
   });
 
@@ -28,9 +43,13 @@ const mapsRouter = (db) => {
         res.json(res.rows[0]);
       })
       .catch(err => {
-        console.log(err.message);
+        res
+          .status(500)
+          .json({ error: err.message });
       });
   });
+
+  // POST /maps/
 
   return router;
 };
