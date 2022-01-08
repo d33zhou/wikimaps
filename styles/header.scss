@@ -1,0 +1,37 @@
+$dark_blue:#146FF3;
+$cream:#E7EFF6;
+
+@mixin page{
+  background-color: $cream;
+  color:$dark_blue;
+}
+@mixin navigation {
+  background-color:$dark_blue;
+  font: $cream;
+}
+@mixin links-theme{
+  text-decoration:none;
+  color:$cream;
+}
+.navigation_bar{
+  @include navigation;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  height: 10vh;
+  #logo{
+    @include links-theme;
+  }
+  #maps-link{
+    @include links-theme;
+  }
+  #maps-favourites{
+    @include links-theme;
+  }
+  #maps-contributions{
+    @include links-theme;
+  }
+  #maps-creation{
+    @include links-theme;
+  }
+}
