@@ -8,18 +8,31 @@
 const express = require('express');
 const router  = express.Router();
 
-module.exports = (db) => {
-  router.get("/", (req, res) => {
-    db.query(`SELECT * FROM maps;`)
-      .then(data => {
-        const maps = data.rows;
-        res.json({ maps });
+const mapsRouter = (db) => {
+
+  // GET /maps/
+  router.get('/', (req, res) => {
+    db.query('SELECT * FROM maps;')
+      .then(res => {
+        res.json(res.rows);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        console.log(err.message);
       });
   });
+
+  // GET /maps/:id
+  router.get('/:id', (req, res) => {
+    db.query('SELECT * FROM maps WHERE id = $1;', [req.params.id])
+      .then(res => {
+        res.json(res.rows[0]);
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  });
+
   return router;
 };
+
+module.exports = mapsRouter;
