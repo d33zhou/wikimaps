@@ -1,8 +1,11 @@
-img{
-  height: 400px;
-  padding-top: 10px;
+#map{
+  height: 600px;
+  width: 1200px;
 }
-#map-image {
-  display:flex;
-  justify-content:flex-end;
+.map-container{
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  display: flex;
+  justify-content:space-between;
 }
