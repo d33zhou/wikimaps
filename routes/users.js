@@ -13,7 +13,7 @@ const userRouter = (db) => {
   // GET /users/favourites
   router.get('/favourites', (req, res) => {
     const queryString = `
-      SELECT * FROM users;
+      SELECT * FROM favourites;
       `;
 
     db.query(queryString)
@@ -30,7 +30,8 @@ const userRouter = (db) => {
   // GET /users/contributions
   router.get('/contributions', (req, res) => {
     const queryString = `
-      SELECT * FROM users;
+      SELECT * FROM points
+      JOIN users ON users.id = creator_id;
       `;
 
     db.query(queryString)
@@ -46,53 +47,26 @@ const userRouter = (db) => {
 
   // GET /users/login
   router.get('/login', (req, res) => {
-    const queryString = `
-      SELECT * FROM users;
-      `;
-
-    db.query(queryString)
-      .then(res => {
-        res.json(res.rows);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    res
+      .status(200)
+      .send('Login page');
   });
 
   // GET /users/logout
   router.get('/logout', (req, res) => {
-    const queryString = `
-      SELECT * FROM users;
-      `;
 
-    db.query(queryString)
-      .then(res => {
-        res.json(res.rows);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    //clear cookies/user handling for logout to be implemented
+
+    res
+      .status(200)
+      .render('/');
   });
 
   // GET /users/register
   router.get('/register', (req, res) => {
-    const queryString = `
-      SELECT * FROM users;
-      `;
-
-    db.query(queryString)
-      .then(res => {
-        res.json(res.rows);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    res
+      .status(200)
+      .send('Register page');
   });
 
   return router;
