@@ -69,6 +69,24 @@ const userRouter = (db) => {
       .send('Register page');
   });
 
+  // POST /users/login
+  router.post('/login', (req, res) => {
+    //login handling logic to be implemented
+
+    res
+      .status(200)
+      .send('Logged in --> update route afterwards');
+  });
+
+  // POST /users/register
+  router.post('/register', (req, res) => {
+    //new registration handling logic to be implemented
+
+    res
+      .status(200)
+      .send('Registered --> update route afterwards');
+  });
+
   return router;
 };
 
