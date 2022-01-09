@@ -9,6 +9,9 @@ const { query } = require('express');
 const express = require('express');
 const router  = express.Router();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
+
 const mapsRouter = (db) => {
 
   // GET /maps/
@@ -59,7 +62,7 @@ const mapsRouter = (db) => {
       INSERT INTO maps (creator_id, title, description)
       VALUES ($1, $2, $3)
       RETURNING id;`
-    const values = [req.body.id, req.body.title, req.body.description]; // need body parser npm
+    const values = [req.body.id, req.body.title, req.body.description];
 
     db.query(queryString, values)
       .then(res => {

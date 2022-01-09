@@ -8,6 +8,9 @@
 const express = require('express');
 const router  = express.Router();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
+
 const userRouter = (db) => {
 
   // GET /users/favourites
