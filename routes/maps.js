@@ -22,8 +22,8 @@ const mapsRouter = (db) => {
       `;
 
     db.query(queryString)
-      .then(res => {
-        res.json(res.rows);
+      .then(result => {
+        res.json(result.rows);
       })
       .catch(err => {
         res
@@ -47,8 +47,8 @@ const mapsRouter = (db) => {
       `;
 
     db.query(queryString, [req.params.id])
-      .then(res => {
-        res.json(res.rows[0]);
+      .then(result => {
+        res.json(result.rows[0]);
       })
       .catch(err => {
         res
@@ -66,7 +66,7 @@ const mapsRouter = (db) => {
     const values = [req.body.id, req.body.title, req.body.description];
 
     db.query(queryString, values)
-      .then(res => {
+      .then(result => {
         res
           .status(200)
           .send("Added!");
