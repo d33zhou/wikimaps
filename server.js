@@ -3,20 +3,27 @@ require("dotenv").config();
 
 // Web server config
 const PORT = process.env.PORT || 8080;
-const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
+
 const app = express();
 const morgan = require("morgan");
 
 // PG database client/connection setup
 const { Pool } = require("pg");
+const bodyParser = require('body-parser');
 const dbParams = require("./lib/db.js");
+
 const db = new Pool(dbParams);
-db.connect();
+db.connect().then(() => {
+  console.log('We have connected to the database.');
+}).catch((err) => {
+  console.log('Error: ', err);
+});
 
 // body parser set-up
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: true}));
+const sassMiddleware = require("./lib/sass-middleware");
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -29,10 +36,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   "/styles",
   sassMiddleware({
-    source: __dirname + "/styles",
-    destination: __dirname + "/public/styles",
+    source: `${__dirname}/styles`,
+    destination: `${__dirname}/public/styles`,
     isSass: false, // false => scss, true => sass
-  })
+  }),
 );
 
 app.use(express.static("public"));

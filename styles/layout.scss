@@ -4,3 +4,23 @@ body,
 html {
   margin: 0;
 }
+
+// maps
+
+.mapList {
+  &-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  &-box {
+    border: 1px solid orangered;
+    width: 31%;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+  &-title {
+    text-transform: uppercase;
+  }
+}
