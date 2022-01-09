@@ -1,11 +1,24 @@
-#map{
-  height: 600px;
-  width: 1200px;
-}
+@use 'header';
 .map-container{
-  padding-top: 20px;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-top: 50px;
+  padding-right: 50px;
+  padding-left: 50px;
   display: flex;
   justify-content:space-between;
+  #map{
+    height: 500px;
+    width: 1000px;
+  }
+}
+
+.intro-text{
+  width:40%;
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top:50px;
+  color:header.$dark_blue;
+  #link{
+    @include header.links-theme;
+    color:header.$dark_blue;
+  }
 }
