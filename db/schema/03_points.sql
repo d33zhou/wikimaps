@@ -6,7 +6,7 @@ CREATE TABLE points (
   creator_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
-  image BYTEA,
-  latitude INTEGER NOT NULL,
-  longitude INTEGER NOT NULL
+  image VARCHAR(255) NOT NULL,
+  latitude DOUBLE PRECISION NOT NULL,
+  longitude DOUBLE PRECISION NOT NULL
 );
