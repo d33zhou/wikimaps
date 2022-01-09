@@ -22,8 +22,8 @@ const userRouter = (db) => {
       `;
 
     db.query(queryString, [req.body.id])
-      .then(res => {
-        res.json(res.rows);
+      .then(result => {
+        res.json(result.rows);
       })
       .catch(err => {
         res
@@ -40,8 +40,8 @@ const userRouter = (db) => {
       `;
 
     db.query(queryString, [req.body.id])
-      .then(res => {
-        res.json(res.rows);
+      .then(result => {
+        res.json(result.rows);
       })
       .catch(err => {
         res
