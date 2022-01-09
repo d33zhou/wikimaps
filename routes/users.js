@@ -16,10 +16,11 @@ const userRouter = (db) => {
   // GET /users/favourites
   router.get('/favourites', (req, res) => {
     const queryString = `
-      SELECT * FROM favourites;
+      SELECT * FROM favourites
+      WHERE user_id = $1;
       `;
 
-    db.query(queryString)
+    db.query(queryString, [req.body.id])
       .then(res => {
         res.json(res.rows);
       })
@@ -34,10 +35,10 @@ const userRouter = (db) => {
   router.get('/contributions', (req, res) => {
     const queryString = `
       SELECT * FROM points
-      JOIN users ON users.id = creator_id;
+      WHERE creator_id = $1;
       `;
 
-    db.query(queryString)
+    db.query(queryString, [req.body.id])
       .then(res => {
         res.json(res.rows);
       })
