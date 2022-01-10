@@ -24,7 +24,9 @@ const userRouter = (db) => {
   router.get('/favourites', (req, res) => {
     if (!req.session.user_id) {
       res.redirect('/');
-    }
+    }else{
+
+
 
     const queryString = `
     SELECT * FROM favourites
@@ -40,28 +42,31 @@ const userRouter = (db) => {
           .status(500)
           .json({ error: err.message });
       });
+    }
   });
 
   // GET /users/contributions
   router.get('/contributions', (req, res) => {
     if (!req.session.user_id) {
       res.redirect('/');
-    }
-
-    const queryString = `
-    SELECT * FROM points
+    } else {
+      const queryString = `
+    SELECT *.points,*.maps
+    FROM points
+    JOIN maps ON maps.id = points.map_id
     WHERE creator_id = $1;
     `;
 
-    db.query(queryString, [req.session.user_id])
-      .then(result => {
-        res.json(result.rows);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+      db.query(queryString, [req.session.user_id])
+        .then(result => {
+          res.render('user_contributions', {contributions:result.rows});
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+    }
   });
 
   // GET /users/login
