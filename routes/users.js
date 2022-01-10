@@ -60,6 +60,7 @@ const userRouter = (db) => {
   router.get('/login/:id', (req, res) => {
 
     // assign cookie credentials
+    //test
     req.session.user_id = req.params.id;
 
     //redirect to homepage
