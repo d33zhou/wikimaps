@@ -12,7 +12,7 @@ const router  = express.Router();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
-let cookieSession = require('cookie-session');
+const cookieSession = require('cookie-session');
 app.use(cookieSession({
   name: "session",
   keys: ['key1', 'key2']
@@ -22,45 +22,52 @@ const userRouter = (db) => {
 
   // GET /users/favourites
   router.get('/favourites', (req, res) => {
-    const queryString = `
+    if (!req.session.user_id) {
+      res.redirect('/');
+    } else {
+      const queryString = `
       SELECT * FROM favourites
       WHERE user_id = $1;
       `;
 
-    db.query(queryString, [req.session.user_id])
-      .then(result => {
-        res.json(result.rows);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+      db.query(queryString, [req.session.user_id])
+        .then(result => {
+          res.json(result.rows);
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+    }
   });
 
   // GET /users/contributions
   router.get('/contributions', (req, res) => {
-    const queryString = `
+    if (!req.session.user_id) {
+      res.redirect('/');
+    } else {
+      const queryString = `
       SELECT * FROM points
       WHERE creator_id = $1;
       `;
 
-    db.query(queryString, [req.session.user_id])
-      .then(result => {
-        res.json(result.rows);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+      db.query(queryString, [req.session.user_id])
+        .then(result => {
+          res.json(result.rows);
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+    }
   });
 
   // GET /users/login
   router.get('/login/:id', (req, res) => {
 
     // assign cookie credentials
-    //test
     req.session.user_id = req.params.id;
 
     //redirect to homepage
