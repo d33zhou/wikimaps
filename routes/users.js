@@ -51,45 +51,27 @@ const userRouter = (db) => {
   });
 
   // GET /users/login
-  router.get('/login', (req, res) => {
+  router.get('/login/:id', (req, res) => {
+
+    // assign cookie credentials
+    req.session.user_id = req.params.id;
+
+    //redirect to homepage
     res
       .status(200)
-      .send('Login page');
+      .redirect('/');
   });
 
   // GET /users/logout
   router.get('/logout', (req, res) => {
 
-    //clear cookies/user handling for logout to be implemented
+    //clear cookies
+    req.session = null;
 
+    //redirect to homepage
     res
       .status(200)
-      .render('/');
-  });
-
-  // GET /users/register
-  router.get('/register', (req, res) => {
-    res
-      .status(200)
-      .send('Register page');
-  });
-
-  // POST /users/login
-  router.post('/login', (req, res) => {
-    //login handling logic to be implemented
-
-    res
-      .status(200)
-      .send('Logged in --> update route afterwards');
-  });
-
-  // POST /users/register
-  router.post('/register', (req, res) => {
-    //new registration handling logic to be implemented
-
-    res
-      .status(200)
-      .send('Registered --> update route afterwards');
+      .redirect('/');
   });
 
   return router;

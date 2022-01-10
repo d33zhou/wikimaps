@@ -23,6 +23,13 @@ db.connect().then(() => {
 // body parser set-up
 const sassMiddleware = require("./lib/sass-middleware");
 
+// encrypt cookies
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: "session",
+  keys: ['key1', 'key2']
+}));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
