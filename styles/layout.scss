@@ -7,6 +7,14 @@ html {
 
 // maps
 
+#map {
+  height: 800px;
+}
+
+.hack {
+  display: none;
+}
+
 .mapList {
   &-container {
     display: flex;
