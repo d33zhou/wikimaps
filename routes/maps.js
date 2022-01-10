@@ -15,6 +15,12 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: "session",
+  keys: ['key1', 'key2']
+}));
+
 const mapsRouter = (db) => {
   // GET /maps/
   router.get('/', (req, res) => {
@@ -42,6 +48,9 @@ const mapsRouter = (db) => {
 
   // GET /maps/create
   router.get('/create', (req, res) => {
+    if (!req.session.user_id) {
+      res.redirect('/');
+    }
     res
       .status(200)
       .send("Create a new map here");

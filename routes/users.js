@@ -12,16 +12,26 @@ const router  = express.Router();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: "session",
+  keys: ['key1', 'key2']
+}));
+
 const userRouter = (db) => {
 
   // GET /users/favourites
   router.get('/favourites', (req, res) => {
-    const queryString = `
-      SELECT * FROM favourites
-      WHERE user_id = $1;
-      `;
+    if (!req.session.user_id) {
+      res.redirect('/');
+    }
 
-    db.query(queryString, [req.body.id])
+    const queryString = `
+    SELECT * FROM favourites
+    WHERE user_id = $1;
+    `;
+
+    db.query(queryString, [req.session.user_id])
       .then(result => {
         res.json(result.rows);
       })
@@ -34,12 +44,16 @@ const userRouter = (db) => {
 
   // GET /users/contributions
   router.get('/contributions', (req, res) => {
-    const queryString = `
-      SELECT * FROM points
-      WHERE creator_id = $1;
-      `;
+    if (!req.session.user_id) {
+      res.redirect('/');
+    }
 
-    db.query(queryString, [req.body.id])
+    const queryString = `
+    SELECT * FROM points
+    WHERE creator_id = $1;
+    `;
+
+    db.query(queryString, [req.session.user_id])
       .then(result => {
         res.json(result.rows);
       })
@@ -51,45 +65,27 @@ const userRouter = (db) => {
   });
 
   // GET /users/login
-  router.get('/login', (req, res) => {
+  router.get('/login/:id', (req, res) => {
+
+    // assign cookie credentials
+    req.session.user_id = req.params.id;
+
+    //redirect to homepage
     res
       .status(200)
-      .send('Login page');
+      .redirect('/');
   });
 
   // GET /users/logout
   router.get('/logout', (req, res) => {
 
-    //clear cookies/user handling for logout to be implemented
+    //clear cookies
+    req.session = null;
 
+    //redirect to homepage
     res
       .status(200)
-      .render('/');
-  });
-
-  // GET /users/register
-  router.get('/register', (req, res) => {
-    res
-      .status(200)
-      .send('Register page');
-  });
-
-  // POST /users/login
-  router.post('/login', (req, res) => {
-    //login handling logic to be implemented
-
-    res
-      .status(200)
-      .send('Logged in --> update route afterwards');
-  });
-
-  // POST /users/register
-  router.post('/register', (req, res) => {
-    //new registration handling logic to be implemented
-
-    res
-      .status(200)
-      .send('Registered --> update route afterwards');
+      .redirect('/');
   });
 
   return router;

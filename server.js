@@ -23,6 +23,13 @@ db.connect().then(() => {
 // body parser set-up
 const sassMiddleware = require("./lib/sass-middleware");
 
+// encrypt cookies
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: "session",
+  keys: ['key1', 'key2']
+}));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -67,12 +74,14 @@ app.use("/api/maps", mapsRoutes(db));
 
 
 app.get("/", (req, res) => {
-  const queryString = `SELECT *
+  const queryString = `SELECT *, users.name AS created_by
   FROM maps
-  ORDER BY id DESC
+  JOIN users ON users.id = maps.creator_id
+  ORDER BY maps.id DESC
   LIMIT 3;`;
   db.query(queryString)
     .then(result => {
+      console.log(result.rows);
       return res.render("index",{topMapsObj:result.rows});
     })
     .catch((err) => {
