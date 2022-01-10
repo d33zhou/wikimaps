@@ -12,6 +12,12 @@ const router  = express.Router();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
+let cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: "session",
+  keys: ['key1', 'key2']
+}));
+
 const userRouter = (db) => {
 
   // GET /users/favourites
@@ -21,7 +27,7 @@ const userRouter = (db) => {
       WHERE user_id = $1;
       `;
 
-    db.query(queryString, [req.body.id])
+    db.query(queryString, [req.session.user_id])
       .then(result => {
         res.json(result.rows);
       })
@@ -39,7 +45,7 @@ const userRouter = (db) => {
       WHERE creator_id = $1;
       `;
 
-    db.query(queryString, [req.body.id])
+    db.query(queryString, [req.session.user_id])
       .then(result => {
         res.json(result.rows);
       })
