@@ -24,44 +24,44 @@ const userRouter = (db) => {
   router.get('/favourites', (req, res) => {
     if (!req.session.user_id) {
       res.redirect('/');
-    } else {
-      const queryString = `
-      SELECT * FROM favourites
-      WHERE user_id = $1;
-      `;
-
-      db.query(queryString, [req.session.user_id])
-        .then(result => {
-          res.json(result.rows);
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
     }
+
+    const queryString = `
+    SELECT * FROM favourites
+    WHERE user_id = $1;
+    `;
+
+    db.query(queryString, [req.session.user_id])
+      .then(result => {
+        res.json(result.rows);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   });
 
   // GET /users/contributions
   router.get('/contributions', (req, res) => {
     if (!req.session.user_id) {
       res.redirect('/');
-    } else {
-      const queryString = `
-      SELECT * FROM points
-      WHERE creator_id = $1;
-      `;
-
-      db.query(queryString, [req.session.user_id])
-        .then(result => {
-          res.json(result.rows);
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
     }
+
+    const queryString = `
+    SELECT * FROM points
+    WHERE creator_id = $1;
+    `;
+
+    db.query(queryString, [req.session.user_id])
+      .then(result => {
+        res.json(result.rows);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   });
 
   // GET /users/login
