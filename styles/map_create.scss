@@ -1,3 +1,20 @@
 #create-new {
   display: flex;
+
+
+  margin-top: 1em;
+  padding: 0 1em;
+
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+
+  #map {
+    height: 400px;
+    width: 600px;
+  }
+
 }
