@@ -67,12 +67,14 @@ app.use("/api/maps", mapsRoutes(db));
 
 
 app.get("/", (req, res) => {
-  const queryString = `SELECT *
+  const queryString = `SELECT *, users.name AS created_by
   FROM maps
-  ORDER BY id DESC
+  JOIN users ON users.id = maps.creator_id
+  ORDER BY maps.id DESC
   LIMIT 3;`;
   db.query(queryString)
     .then(result => {
+      console.log(result.rows);
       return res.render("index",{topMapsObj:result.rows});
     })
     .catch((err) => {
