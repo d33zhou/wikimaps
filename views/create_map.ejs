@@ -38,37 +38,18 @@
 
     <h1>Create a New Map</h1>
 
-    <div class="container"> <!-- mt-4 class -->
-      <form method="POST" action="/maps/create">
-        <input type="text" id="title" name="title">
-      </form>
-    </div>
-
+    <form method="POST" action="/maps/create">
+      <input type="text" id="title" name="title" placeholder="Title">
+      <input type="text" id="city" name="city" placeholder="Location">
+      <textarea id="description" name="description" placeholder="Description"></textarea>
+      <button type="submit">Create Map</button>
+    </form>
 
   </section>
 
   <section id="map-view">
 
   </section>
-
-  <div class="container mt-4">
-
-
-    <h1>Create a New Map</h1>
-    <div class="mapList-container">
-      <!--
-      <div class="mapList-box">
-        <h3 class="mapList-title"><%= mapList[i].title %></h3>
-
-        <p>Created by: <a href="/users/<%= mapList[i].creator_id %>"><%= mapList[i].created_by %></a></p>
-        <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= mapList[i].id %>">View Map</a>
-      </div>
-      -->
-    </div>
-
-
-  </div>
-
 
 </body>
 
