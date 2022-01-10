@@ -26,11 +26,14 @@ $cream:#E7EFF6;
     @include links-theme;
   }
 }
+footer{
+  width:100%;
+}
 #footer-base{
   @include navigation;
-    @include links-theme;
+  @include links-theme;
   display:flex;
-    justify-content: space-around;
+  justify-content: space-around;
 }
 
 
