@@ -91,13 +91,13 @@ const mapsRouter = (db) => {
       INSERT INTO maps (creator_id, title, description)
       VALUES ($1, $2, $3)
       RETURNING id;`;
-    const values = [req.body.id, req.body.title, req.body.description];
+    const values = [req.session.user_id, req.body.title, req.body.description];
 
     db.query(queryString, values)
       .then((result) => {
         res
           .status(200)
-          .send("Added!");
+          .send("Added!"); // to redirect to the map page just created
       })
       .catch((err) => {
         res
