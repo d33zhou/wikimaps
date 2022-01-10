@@ -63,9 +63,27 @@ app.use("/api/maps", mapsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
+
+
+
 app.get("/", (req, res) => {
-  res.render("index");
+  const queryString = `SELECT *
+  FROM maps
+  ORDER BY id DESC
+  LIMIT 3;`;
+  db.query(queryString)
+    .then(result => {
+      return res.render("index",{topMapsObj:result.rows});
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Wiki Maps listening on port ${PORT}`);

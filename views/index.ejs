@@ -61,6 +61,16 @@
       <a id="link" href="http://localhost:8080/maps/"><b>Explore available maps! ></b></a>
     </div>
     </div>
+    <div class ="top-maps-container">
+      <% for (let i = 0; i < Object.keys(topMapsObj).length; i++) { %>
+        <div class="mapList-box">
+          <h3 class="mapList-title"><%= topMapsObj[i].title %></h3>
+          <p><%= topMapsObj[i].description %></p>
+          <p>Created by: <a href="/users/<%= topMapsObj[i].creator_id %>"><%= topMapsObj[i].created_by %></a></p>
+          <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= topMapsObj[i].id %>">View Map</a>
+        </div>
+        <% } %>
+    </div>
   </body>
 
 </html>
