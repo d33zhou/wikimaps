@@ -22,16 +22,7 @@ $cream:#E7EFF6;
   #logo{
     @include links-theme;
   }
-  #maps-link{
-    @include links-theme;
-  }
-  #maps-favourites{
-    @include links-theme;
-  }
-  #maps-contributions{
-    @include links-theme;
-  }
-  #maps-creation{
+  #maps-link,#maps-favourites,#maps-contributions,#maps-creation,#copyright{
     @include links-theme;
   }
 }

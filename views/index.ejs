@@ -64,7 +64,7 @@
     <div class ="mapList-container">
       <% for (let i = 0; i < Object.keys(topMapsObj).length; i++) { %>
         <div class="mapList-box">
-          <img src="/public/images/Toronto-map.png">
+          <img src="/images/Toronto-map.png">
           <h3 class="mapList-title"><%= topMapsObj[i].title %></h3>
           <p><%= topMapsObj[i].description %></p>
           <p>Created by: <a href="/users/<%= topMapsObj[i].creator_id %>"><%= topMapsObj[i].created_by %></a></p>
@@ -72,6 +72,7 @@
         </div>
         <% } %>
     </div>
+    <%- include('partials/_footer') %>
   </body>
 
 </html>
