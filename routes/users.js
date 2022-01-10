@@ -6,20 +6,22 @@
  */
 
 const express = require('express');
+
 const app = express();
-const router  = express.Router();
+const router = express.Router();
 
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const cookieSession = require('cookie-session');
+
 app.use(cookieSession({
   name: "session",
-  keys: ['key1', 'key2']
+  keys: ['key1', 'key2'],
 }));
 
 const userRouter = (db) => {
-
   // GET /users/favourites
   router.get('/favourites', (req, res) => {
     if (!req.session.user_id) {
@@ -27,15 +29,21 @@ const userRouter = (db) => {
     }
 
     const queryString = `
-    SELECT * FROM favourites
-    WHERE user_id = $1;
-    `;
+      SELECT DISTINCT maps.*, users.name AS created_by, favourites.user_id
+      FROM maps
+      JOIN users ON users.id = maps.creator_id
+      JOIN favourites ON favourites.map_id = maps.id
+      WHERE favourites.user_id = $1
+      ORDER BY id DESC;
+      `;
 
-    db.query(queryString, [req.session.user_id])
-      .then(result => {
-        res.json(result.rows);
+    return db
+      .query(queryString, [req.session.user_id])
+      .then((result) => {
+        // res.json(result.rows);
+        res.render('fav', { mapList: result.rows });
       })
-      .catch(err => {
+      .catch((err) => {
         res
           .status(500)
           .json({ error: err.message });
@@ -54,10 +62,10 @@ const userRouter = (db) => {
     `;
 
     db.query(queryString, [req.session.user_id])
-      .then(result => {
+      .then((result) => {
         res.json(result.rows);
       })
-      .catch(err => {
+      .catch((err) => {
         res
           .status(500)
           .json({ error: err.message });
@@ -66,11 +74,10 @@ const userRouter = (db) => {
 
   // GET /users/login
   router.get('/login/:id', (req, res) => {
-
     // assign cookie credentials
     req.session.user_id = req.params.id;
 
-    //redirect to homepage
+    // redirect to homepage
     res
       .status(200)
       .redirect('/');
@@ -78,11 +85,10 @@ const userRouter = (db) => {
 
   // GET /users/logout
   router.get('/logout', (req, res) => {
-
-    //clear cookies
+    // clear cookies
     req.session = null;
 
-    //redirect to homepage
+    // redirect to homepage
     res
       .status(200)
       .redirect('/');
