@@ -97,7 +97,7 @@ const mapsRouter = (db) => {
       .then((result) => {
         res
           .status(200)
-          .send("Added!"); // to redirect to the map page just created
+          .redirect(`/maps/${result.rows[0].id}`);
       })
       .catch((err) => {
         res
