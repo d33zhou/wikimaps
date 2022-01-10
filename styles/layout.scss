@@ -7,6 +7,14 @@ html {
 
 // maps
 
+#map {
+  height: 600px;
+}
+
+.hack {
+  display: none;
+}
+
 .mapList {
   &-container {
     display: flex;
@@ -27,5 +35,20 @@ html {
   }
   &-btn {
     max-width: fit-content;
+  }
+}
+
+.map {
+  &-content {
+  display: flex;
+  margin: 4rem 0;
+  }
+  &-info {
+  flex-grow: 2;
+  }
+  &-form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 }

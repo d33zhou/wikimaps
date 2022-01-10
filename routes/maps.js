@@ -59,13 +59,23 @@ const mapsRouter = (db) => {
   // GET /maps/:id
   router.get('/:id', (req, res) => {
     const queryString = `
-      SELECT * FROM maps
-      WHERE id = $1;
+      SELECT maps.*,
+        users.name AS created_by,
+        points.title AS point_name,
+        points.description AS point_description,
+        points.image AS point_img,
+        points.latitude AS latitude,
+        points.longitude AS longitude
+      FROM maps
+       JOIN users ON users.id = maps.creator_id
+       JOIN points ON points.creator_id = maps.creator_id
+       WHERE maps.id = $1
+       ORDER BY maps.id;
       `;
 
     db.query(queryString, [req.params.id])
       .then((result) => {
-        res.json(result.rows[0]);
+        res.render('map_id', { mapData: result.rows });
       })
       .catch((err) => {
         res
