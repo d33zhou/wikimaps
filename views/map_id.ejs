@@ -50,8 +50,24 @@
           subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
         }).addTo(map);
 
+        const newIcon = L.icon({
+          iconUrl: '/images/red-marker-icon.png',
+
+          iconSize: [48, 48],
+          iconAnchor: [24, 50],
+          popupAnchor: [0, -40]
+        })
+
         for (let i = 0; i < Object.keys(mapData).length; i++) {
-          marker = new L.marker([mapData[i].latitude, mapData[i].longitude]).bindPopup(`${mapData[i].id}`).addTo(map);
+          marker = new L.marker([mapData[i].latitude, mapData[i].longitude], {
+              icon: newIcon
+            })
+            .bindPopup(
+              `
+              <h6>${mapData[i].point_name}</h6>
+            <p>${mapData[i].point_description}</p>
+            `)
+            .addTo(map);
         }
 
         // adds popup with lat and long
@@ -72,14 +88,22 @@
 
 
     </div>
+    <div class="map-content">
+      <div class="map-info">
+        <h2>About Map</h2>
+        <p><%= mapData[0].description %></p>
+      </div>
+      <div class="map-form">
+        <h3>Add Point</h3>
+        <form action="" method="post" class="map-form">
+          <input type="text" name="point-title" id="point-title">
+          <input type="text" name="point-description" id="point-description">
+          <button type="button" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
 
-
-    <% //const jsonData = JSON.stringify(mapData) %>
-    <% //console.log(JSON.parse(jsonData)); %>
-    <%= mapData[0].latitude %>
-    <%= Object.keys(mapData).length %>
   </div>
-  <!-- <script src="/scripts/map.js"></script> -->
 
 
 </body>

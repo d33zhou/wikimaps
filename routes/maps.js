@@ -73,7 +73,7 @@ const mapsRouter = (db) => {
        ORDER BY maps.id;
       `;
 
-    db.query(queryString, [3])
+    db.query(queryString, [req.params.id])
       .then((result) => {
         res.render('map_id', { mapData: result.rows });
       })

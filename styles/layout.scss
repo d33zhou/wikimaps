@@ -8,7 +8,7 @@ html {
 // maps
 
 #map {
-  height: 800px;
+  height: 600px;
 }
 
 .hack {
@@ -34,5 +34,20 @@ html {
   }
   &-btn {
     max-width: fit-content;
+  }
+}
+
+.map {
+  &-content {
+  display: flex;
+  margin: 4rem 0;
+  }
+  &-info {
+  flex-grow: 2;
+  }
+  &-form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 }
