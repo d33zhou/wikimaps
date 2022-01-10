@@ -7,29 +7,37 @@
 
 const { query } = require('express');
 const express = require('express');
+
 const app = express();
-const router  = express.Router();
+const router = express.Router();
 
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const mapsRouter = (db) => {
-
   // GET /maps/
   router.get('/', (req, res) => {
     const queryString = `
-      SELECT * FROM maps;
+      SELECT maps.*, users.name AS created_by
+      FROM maps
+      JOIN users ON users.id = maps.creator_id
+      ORDER BY id DESC;
       `;
 
-    db.query(queryString)
-      .then(result => {
-        res.json(result.rows);
+    return db
+      .query(queryString)
+      .then((result) => {
+        // res.json(result.rows);
+        res.render('maps', { mapList: result.rows });
       })
-      .catch(err => {
+      .catch((err) => {
         res
           .status(500)
           .json({ error: err.message });
       });
+
+    // res.render('maps', { mapList: result.rows });
   });
 
   // GET /maps/create
@@ -47,10 +55,10 @@ const mapsRouter = (db) => {
       `;
 
     db.query(queryString, [req.params.id])
-      .then(result => {
+      .then((result) => {
         res.json(result.rows[0]);
       })
-      .catch(err => {
+      .catch((err) => {
         res
           .status(500)
           .json({ error: err.message });
@@ -62,16 +70,16 @@ const mapsRouter = (db) => {
     const queryString = `
       INSERT INTO maps (creator_id, title, description)
       VALUES ($1, $2, $3)
-      RETURNING id;`
+      RETURNING id;`;
     const values = [req.body.id, req.body.title, req.body.description];
 
     db.query(queryString, values)
-      .then(result => {
+      .then((result) => {
         res
           .status(200)
           .send("Added!");
       })
-      .catch(err => {
+      .catch((err) => {
         res
           .status(500)
           .json({ error: err.message });

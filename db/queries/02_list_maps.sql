@@ -1,0 +1,3 @@
+SELECT *
+FROM maps
+ORDER BY id DESC;
