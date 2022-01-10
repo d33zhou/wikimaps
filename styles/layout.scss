@@ -14,13 +14,17 @@ html {
     justify-content: space-between;
   }
   &-box {
-    border: 1px solid orangered;
+    border: 1px solid lightgray;
     width: 31%;
     margin-bottom: 40px;
     display: flex;
     flex-direction: column;
+    padding: 2rem;
   }
   &-title {
     text-transform: uppercase;
+  }
+  &-btn {
+    max-width: fit-content;
   }
 }

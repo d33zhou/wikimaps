@@ -21,7 +21,8 @@ const mapsRouter = (db) => {
     const queryString = `
       SELECT maps.*, users.name AS created_by
       FROM maps
-      JOIN users ON users.id = maps.creator_id;
+      JOIN users ON users.id = maps.creator_id
+      ORDER BY id DESC;
       `;
 
     return db
