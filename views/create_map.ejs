@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Wiki Maps-Create A Map</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+
+  <!-- Bootstrap CSS-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <!-- App JS -->
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <%- include('partials/_header') %>
+
+  <section id="input-boxes">
+
+    <h1>Create a New Map</h1>
+
+    <div class="container"> <!-- mt-4 class -->
+      <form method="POST" action="/maps/create">
+        <input type="text" id="title" name="title">
+      </form>
+    </div>
+
+
+  </section>
+
+  <section id="map-view">
+
+  </section>
+
+  <div class="container mt-4">
+
+
+    <h1>Create a New Map</h1>
+    <div class="mapList-container">
+      <!--
+      <div class="mapList-box">
+        <h3 class="mapList-title"><%= mapList[i].title %></h3>
+
+        <p>Created by: <a href="/users/<%= mapList[i].creator_id %>"><%= mapList[i].created_by %></a></p>
+        <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= mapList[i].id %>">View Map</a>
+      </div>
+      -->
+    </div>
+
+
+  </div>
+
+
+</body>
+
+</html>
