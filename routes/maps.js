@@ -51,9 +51,10 @@ const mapsRouter = (db) => {
     if (!req.session.user_id) {
       res.redirect('/');
     }
+
     res
       .status(200)
-      .send("Create a new map here");
+      .render('map_create');
   });
 
   // GET /maps/:id
