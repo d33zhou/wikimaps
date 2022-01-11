@@ -11,6 +11,7 @@ const morgan = require("morgan");
 // PG database client/connection setup
 const { Pool } = require("pg");
 const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
 const dbParams = require("./lib/db.js");
 
 const db = new Pool(dbParams);
@@ -24,10 +25,9 @@ db.connect().then(() => {
 const sassMiddleware = require("./lib/sass-middleware");
 
 // encrypt cookies
-const cookieSession = require('cookie-session');
 app.use(cookieSession({
   name: "session",
-  keys: ['key1', 'key2']
+  keys: ['key1', 'key2'],
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -71,19 +71,18 @@ app.use("/api/maps", mapsRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  const queryString = `SELECT *, users.name AS created_by
-  FROM maps
-  JOIN users ON users.id = maps.creator_id
-  ORDER BY maps.id DESC
+  const queryString = `
+  SELECT maps.*, users.name AS created_by
+      FROM maps
+      JOIN users ON users.id = maps.creator_id
+      ORDER BY id DESC
   LIMIT 3;`;
 
   db.query(queryString)
-    .then(result => {
-      return res.render("index", {
-        user: req.session.user_id,
-        topMapsObj: result.rows
-      });
-    })
+    .then((result) => res.render("index", {
+      user: req.session.user_id,
+      topMapsObj: result.rows,
+    }))
     .catch((err) => {
       res
         .status(500)
