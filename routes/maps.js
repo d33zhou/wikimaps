@@ -51,9 +51,10 @@ const mapsRouter = (db) => {
     if (!req.session.user_id) {
       res.redirect('/');
     }
+
     res
       .status(200)
-      .send("Create a new map here");
+      .render('map_create');
   });
 
   // GET /maps/:id
@@ -90,13 +91,13 @@ const mapsRouter = (db) => {
       INSERT INTO maps (creator_id, title, description)
       VALUES ($1, $2, $3)
       RETURNING id;`;
-    const values = [req.body.id, req.body.title, req.body.description];
+    const values = [req.session.user_id, req.body.title, req.body.description];
 
     db.query(queryString, values)
       .then((result) => {
         res
           .status(200)
-          .send("Added!");
+          .redirect(`/maps/${result.rows[0].id}`);
       })
       .catch((err) => {
         res

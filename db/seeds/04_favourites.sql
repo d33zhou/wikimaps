@@ -1,3 +1,10 @@
+insert into favourites (user_id, map_id) values (1, 2);
+insert into favourites (user_id, map_id) values (1, 7);
+insert into favourites (user_id, map_id) values (1, 14);
+insert into favourites (user_id, map_id) values (1, 16);
+insert into favourites (user_id, map_id) values (1, 17);
+insert into favourites (user_id, map_id) values (1, 18);
+insert into favourites (user_id, map_id) values (1, 3);
 insert into favourites (user_id, map_id) values (24, 16);
 insert into favourites (user_id, map_id) values (33, 18);
 insert into favourites (user_id, map_id) values (11, 8);

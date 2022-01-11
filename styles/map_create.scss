@@ -1,0 +1,28 @@
+#create-new {
+  display: flex;
+
+
+  margin-top: 1em;
+  padding: 0 1em;
+  gap: 1em;
+
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 400px;
+  }
+
+  #map {
+    height: 500px;
+    width: 800px;
+  }
+
+  #loc-coords {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+  }
+
+}
