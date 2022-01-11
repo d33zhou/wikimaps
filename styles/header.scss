@@ -16,19 +16,42 @@ $cream:#E7EFF6;
 .navigation_bar{
   @include navigation;
   display:flex;
-  justify-content:space-around;
+  justify-content:space-between;
   align-items:center;
   height: 10vh;
+
   #logo{
     @include links-theme;
   }
-  #maps-link,#maps-favourites,#maps-contributions,#maps-creation{
+
+  #maps-link, #maps-favourites, #maps-contributions, #maps-creation{
     @include links-theme;
   }
+
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-left: 3em;
+    gap: 4em;
+  }
+
+  .nav-buttons {
+    padding-right: 3em;
+  }
+
+  #register-login {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1em;
+  }
 }
+
 footer{
   width:100%;
 }
+
 #footer-base{
   @include navigation;
   @include links-theme;
