@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Wiki Maps-Create A Map</title>
+  <title>Wiki Maps-Create Map</title>
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -33,53 +33,59 @@
 </head>
 
 <body>
-  <%- include('partials/_header') %>
+  <div id="page-container">
 
-  <section id="create-new">
-    <section id="create-input-boxes">
+    <%- include('partials/_header') %>
 
-      <h1>Create a Map</h1>
+    <div id="content-wrap">
+      <section id="create-new">
+        <section id="create-input-boxes">
 
-      <form method="POST" action="/maps/create">
-        <input type="text" id="title" name="title" placeholder="Title">
-        <input type="text" id="city" name="city" placeholder="Location">
-        <div id="loc-coords">
-          <input class="form-control" type="text" id="loc-lat" name="loc-lat" placeholder="Latitude" disabled readonly>
-          <input class="form-control" type="text" id="loc-long" name="loc-long" placeholder="Longitude" disabled readonly>
-        </div>
-        <textarea id="description" name="description" rows="5" placeholder="Description"></textarea>
-        <button type="submit" class="btn btn-primary">Create Map</button>
-      </form>
+          <h1>Create Map</h1>
 
-    </section>
+          <form method="POST" action="/maps/create">
+            <input type="text" id="title" name="title" placeholder="Title">
+            <input type="text" id="city" name="city" placeholder="Location">
+            <div id="loc-coords">
+              <input class="form-control" type="text" id="loc-lat" name="loc-lat" placeholder="Latitude" disabled readonly>
+              <input class="form-control" type="text" id="loc-long" name="loc-long" placeholder="Longitude" disabled readonly>
+            </div>
+            <textarea id="description" name="description" rows="5" placeholder="Description"></textarea>
+            <button type="submit" class="btn btn-primary">Create Map</button>
+          </form>
 
-    <section id="create-map-view">
-      <div id="map">
-        <script>
-          const map = L.map('map').setView([43.657572963908336, -79.41145185759068], 12);
+        </section>
 
-          // maptiler
-          L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=MSPwE9Jr5bzs11wgXA8F', {
-          attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-          maxZoom: 18,
-          id: 'mapbox/streets-v11',
-          tileSize: 512,
-          zoomOffset: -1,
-          accessToken: 'your.mapbox.access.token',
-          }).addTo(map);
+        <section id="create-map-view">
+          <div id="map">
+            <script>
+              const map = L.map('map').setView([43.657572963908336, -79.41145185759068], 12);
 
-          // google map tile
-          L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-          maxZoom: 18,
-          subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-          }).addTo(map);
-        </script>
-      </div>
-    </section>
+              // maptiler
+              L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=MSPwE9Jr5bzs11wgXA8F', {
+              attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+              maxZoom: 18,
+              id: 'mapbox/streets-v11',
+              tileSize: 512,
+              zoomOffset: -1,
+              accessToken: 'your.mapbox.access.token',
+              }).addTo(map);
 
-  </section>
+              // google map tile
+              L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+              maxZoom: 18,
+              subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+              }).addTo(map);
+            </script>
+          </div>
+        </section>
 
-  <%- include('partials/_footer') %>
+      </section>
+    </div>
+
+    <%- include('partials/_footer') %>
+
+  </div>
 </body>
 
 </html>
