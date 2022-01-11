@@ -130,6 +130,24 @@ const mapsRouter = (db) => {
       });
   });
 
+  router.delete('/pointer/:id', (req, res) => {
+    const queryString = `
+    DELETE FROM points
+    WHERE id = $1;
+    `;
+    const values = [req.params.id];
+    db.query(queryString, values)
+      .then((result) => {
+        res
+          .redirect(`/users/contributions`);
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   return router;
 };
 

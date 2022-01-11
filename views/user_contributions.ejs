@@ -64,8 +64,15 @@
           <p><%= contributions[i].latitude %></p>
           <p><%= contributions[i].longitude %></p>
         </div>
-        <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= contributions[i].map_id %>">View
-          Map</a>
+        <div class="mapList-btn-box">
+
+          <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= contributions[i].map_id %>">View
+            Map</a>
+          <form action="/maps/pointer/<%= contributions[i].id %>">
+            <button class="btn-danger btn btn-sm mapList-btn">Remove</button>
+
+          </form>
+        </div>
       </div>
       <% } %>
     </div>

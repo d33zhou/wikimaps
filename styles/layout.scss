@@ -47,6 +47,10 @@ body {
     margin-top: 20px;
     text-transform: uppercase;
   }
+  &-btn-box {
+    display: flex;
+    gap: 10px;
+  }
   &-btn {
     max-width: fit-content;
   }
