@@ -8,11 +8,13 @@
 
 <% if (!user) { %>
 
-    <button type="button" class="btn btn-light">Register</button>
+    <div>
+      <button type="button" class="btn btn-light">Register</button>
 
-    <form method="GET" action="/users/login/1">
-      <button type="submit" class="btn btn-light">Log In</button>
-    </form>
+      <form method="GET" action="/users/login/1">
+        <button type="submit" class="btn btn-light">Log In</button>
+      </form>
+    </div>
 
 <% } else { %>
 

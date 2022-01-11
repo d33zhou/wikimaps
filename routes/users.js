@@ -98,6 +98,7 @@ const userRouter = (db) => {
 
   // GET /users/logout
   router.get('/logout', (req, res) => {
+
     // clear cookies
     req.session = null;
 
