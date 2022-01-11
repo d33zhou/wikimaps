@@ -62,12 +62,12 @@
         </p>
         <a id="link" href="http://localhost:8080/maps/"><b>Explore available maps! ></b></a>
       </div>
-    </div> <!-- map container -->
+    </div>
+    <!-- map container -->
     <% let favArray = []; %>
     <%for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
-      <%= favArray.push(favMapsObj[i].map_id); %>
+      <% favArray.push(favMapsObj[i].map_id); %>
       <% } %>
-      <%= console.log(favArray); %>
     <div class="mapList-container">
       <% for (let i = 0; i < Object.keys(topMapsObj).length; i++) { %>
       <div class="mapList-box">
