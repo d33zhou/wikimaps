@@ -32,6 +32,10 @@ const mapsRouter = (db) => {
       JOIN users ON users.id = maps.creator_id
       ORDER BY id DESC;
       `;
+  //   const queryString1 = `
+  // SELECT map_id
+  // FROM favourites
+  // WHERE user_id = $1;`;
 
     return db
       .query(queryString)

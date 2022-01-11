@@ -75,6 +75,25 @@ const userRouter = (db) => {
       });
   });
 
+  //POST  users/favourites/delete
+  router.post('/favourites/delete', (req, res) => {
+    const queryString = `
+    DELETE FROM favourites
+    WHERE user_id =$1 AND map_id=$2;
+    `;
+    const values = [req.session.user_id,req.body.map_id];
+    db.query(queryString, values)
+      .then((result) => {
+        res.status(200).send({success:true});
+        res.end();
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   // GET /users/contributions
   router.get('/contributions', (req, res) => {
     if (!req.session.user_id) {

@@ -7,6 +7,9 @@ $(document).ready(function() {
     if (icon.hasClass('fa-heart-fav')) {
       icon.removeClass('fa-heart-fav');
       console.log('trying to remove class');
+      $.post("http://localhost:8080/users/favourites/delete",{map_id:map_id},function(data,status) {
+        console.log("deleting record inside post",data);
+      });
     } else {
       icon.addClass('fa-heart-fav');
       console.log('trying to add class');
@@ -16,7 +19,7 @@ $(document).ready(function() {
         data:{map_id:map_id}
       })
         .then(function(data) {
-          console.log(data);
+          console.log("adding record",data);
         });
 
     }
