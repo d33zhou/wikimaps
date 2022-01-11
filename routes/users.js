@@ -28,7 +28,7 @@ const userRouter = (db) => {
       res.redirect('/');
     } else {
 
-    const queryString = `
+      const queryString = `
       SELECT DISTINCT maps.*, users.name AS created_by, favourites.user_id
       FROM maps
       JOIN users ON users.id = maps.creator_id
@@ -37,17 +37,17 @@ const userRouter = (db) => {
       ORDER BY id DESC;
       `;
 
-    return db
-      .query(queryString, [req.session.user_id])
-      .then((result) => {
+      return db
+        .query(queryString, [req.session.user_id])
+        .then((result) => {
         // res.json(result.rows);
-        res.render('fav', { mapList: result.rows });
-      })
-      .catch((err) => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+          res.render('fav', { mapList: result.rows });
+        })
+        .catch((err) => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
 
     }
   });

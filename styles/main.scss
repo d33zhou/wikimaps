@@ -22,3 +22,27 @@
     color:header.$dark_blue;
   }
 }
+.map-container{
+  display: flex;
+  justify-content:center;
+#mapThumbnail{
+  height: 300px;
+
+}
+}
+.buttons{
+  display: flex;
+  justify-content:space-between;
+
+}
+.fa-heart{
+  color:lightpink;
+  font-size:1.8em;
+  background: none;
+	border: none;
+	padding: 0;
+	outline: inherit;
+}
+.fa-heart:hover{
+  color:rgb(250, 6, 42);
+}
