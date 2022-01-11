@@ -58,8 +58,8 @@
 
           <div id="page-selector">
 
-            <a href="/maps/<%= Number(page) === 1 ? '#' : (Number(page) - 1) %>" class="page-change">&lt</a>
-            <a href="/maps/<%= (Number(page) + 1) %>" class="page-change">&gt</a>
+            <a href="/maps/<%= Number(page) === 1 ? 1 : (Number(page) - 1) %>" class="page-change">&lt</a>
+            <a href="/maps/<%= Number(page) >= Number(maxPages) ? maxPages : (Number(page) + 1) %>" class="page-change">&gt</a>
 
           </div>
 

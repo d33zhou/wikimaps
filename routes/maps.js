@@ -98,23 +98,23 @@ const mapsRouter = (db) => {
 
     const values = [resultsPerPage, (pageNum - 1) * resultsPerPage];
 
-    // first query, to obtain filtered map data to display on page
+    // first query, to obtain total map records (for page navigation)
     db
-      .query(queryStringData, values)
-      .then(data => { return data.rows })
-      .then(data => {
+      .query(queryStringPages)
+      .then(records => { return records.rows[0] })
+      .then(records => {
 
-        // second query, to obtain total map records (for page navigation)
+        // second query, to obtain filtered map data to display on page
         db
-          .query(queryStringPages)
-          .then(records => {
+          .query(queryStringData, values)
+          .then(data => {
 
             // render view with query results from first and second queries
             res.render('maps', {
               user: req.session.user_id,
               mapList: data.rows,
               page: pageNum,
-              maxPages: Math.ceil(records / resultsPerPage),
+              maxPages: Math.ceil(records.count / resultsPerPage),
             });
 
           });
