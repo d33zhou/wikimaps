@@ -48,6 +48,8 @@ const userRouter = (db) => {
           .status(500)
           .json({ error: err.message });
       });
+
+    }
   });
 
   // GET /users/contributions
