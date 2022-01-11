@@ -27,8 +27,7 @@ const userRouter = (db) => {
     if (!req.session.user_id) {
       res.redirect('/');
     } else {
-
-    const queryString = `
+      const queryString = `
       SELECT DISTINCT maps.*, users.name AS created_by, favourites.user_id
       FROM maps
       JOIN users ON users.id = maps.creator_id
@@ -37,20 +36,19 @@ const userRouter = (db) => {
       ORDER BY id DESC;
       `;
 
-    return db
-      .query(queryString, [req.session.user_id])
-      .then((result) => {
-        res.render('fav', {
-          user: req.session.user_id,
-          mapList: result.rows
+      return db
+        .query(queryString, [req.session.user_id])
+        .then((result) => {
+          res.render('fav', {
+            user: req.session.user_id,
+            mapList: result.rows,
+          });
+        })
+        .catch((err) => {
+          res
+            .status(500)
+            .json({ error: err.message });
         });
-      })
-      .catch((err) => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-
     }
   });
 
@@ -62,26 +60,27 @@ const userRouter = (db) => {
       const queryString = `
       SELECT *
       FROM points
-      WHERE creator_id = $1;
+      WHERE creator_id = $1
+      ORDER BY id DESC;
       `;
       const queryString1 = `
           SELECT *
           FROM maps
-          WHERE creator_id = $1;
+          WHERE creator_id = $1
+          ORDER BY id DESC;
         `;
-      db.query(queryString1,[req.session.user_id])
-        .then(result1 => {
-          return result1.rows;
-        })
+      db.query(queryString1, [req.session.user_id])
+        .then((result1) => result1.rows)
         .then((result1) => {
-          db.query(queryString,[req.session.user_id])
-            .then(result => {
+          db.query(queryString, [req.session.user_id])
+            .then((result) => {
               res.render('user_contributions', {
                 user: req.session.user_id,
-                contributions:result.rows,contributionsMaps:result1
+                contributions: result.rows,
+                contributionsMaps: result1,
               });
             })
-            .catch(err => {
+            .catch((err) => {
               res
                 .status(500)
                 .json({ error: err.message });
@@ -103,7 +102,6 @@ const userRouter = (db) => {
 
   // GET /users/logout
   router.get('/logout', (req, res) => {
-
     // clear cookies
     req.session = null;
 
