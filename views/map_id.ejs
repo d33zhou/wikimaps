@@ -35,95 +35,99 @@
 </head>
 
 <body>
-  <%- include('partials/_header') %>
+  <div id="page-container">
+    <%- include('partials/_header') %>
 
-  <div class="container mt-4">
-    <p class="hack"><%= JSON.stringify(mapData) %></p>
-    <h1>Map: <%= mapData[0].title %></h1>
+    <div id="content-wrap">
+      <div class="container mt-4">
+        <p class="hack"><%= JSON.stringify(mapData) %></p>
+        <h1>Map: <%= mapData[0].title %></h1>
 
-    <div id="map">
-      <script>
-        const mapData = JSON.parse(document.querySelector('.hack').innerHTML);
-        console.log(mapData);
-        const map = L.map('map').setView([43.657572963908336, -79.41145185759068], 12);
+        <div id="map">
+          <script>
+            const mapData = JSON.parse(document.querySelector('.hack').innerHTML);
+            console.log(mapData);
+            const map = L.map('map').setView([43.657572963908336, -79.41145185759068], 12);
 
-        // google map tile
-        L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-          maxZoom: 18,
-          subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        }).addTo(map);
+            // google map tile
+            L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+              maxZoom: 18,
+              subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            }).addTo(map);
 
-        const newIcon = L.icon({
-          iconUrl: '/images/red-marker-icon.png',
+            const newIcon = L.icon({
+              iconUrl: '/images/red-marker-icon.png',
 
-          iconSize: [48, 48],
-          iconAnchor: [24, 50],
-          popupAnchor: [0, -40]
-        })
-
-        for (let i = 0; i < Object.keys(mapData).length; i++) {
-          // console.log(mapData.length)
-          marker = new L.marker([mapData[i].latitude, mapData[i].longitude], {
-              icon: newIcon
+              iconSize: [48, 48],
+              iconAnchor: [24, 50],
+              popupAnchor: [0, -40]
             })
-            .bindPopup(
-              `
-              <h6>${mapData[i].point_name}</h6>
-            <p>${mapData[i].point_description}</p>
-            `)
-            .addTo(map);
-        }
 
-        // adds popup with lat and long
-        const popup = L.popup();
+            for (let i = 0; i < Object.keys(mapData).length; i++) {
+              // console.log(mapData.length)
+              marker = new L.marker([mapData[i].latitude, mapData[i].longitude], {
+                  icon: newIcon
+                })
+                .bindPopup(
+                  `
+                  <h6>${mapData[i].point_name}</h6>
+                <p>${mapData[i].point_description}</p>
+                `)
+                .addTo(map);
+            }
 
-        function onMapClick(e) {
-          // const formLat = $('textarea.form-lat');
-          // const formLng = $('textarea.form-lng');
+            // adds popup with lat and long
+            const popup = L.popup();
 
-          popup
-            .setLatLng(e.latlng)
-            .setContent(`You clicked the map at ${e.latlng.toString()}`)
-            .openOn(map);
+            function onMapClick(e) {
+              // const formLat = $('textarea.form-lat');
+              // const formLng = $('textarea.form-lng');
 
-          console.log(e.latlng);
-          // mapLatitude = e.latlng.lat;
-          // mapLongitude = e.latlng.lng;
+              popup
+                .setLatLng(e.latlng)
+                .setContent(`You clicked the map at ${e.latlng.toString()}`)
+                .openOn(map);
 
-          document.querySelector('.form_lat').value = e.latlng.lat.toString();
-          document.querySelector('.form_lng').value = e.latlng.lng.toString();
+              console.log(e.latlng);
+              // mapLatitude = e.latlng.lat;
+              // mapLongitude = e.latlng.lng;
 
-        }
-        map.on('click', onMapClick);
+              document.querySelector('.form_lat').value = e.latlng.lat.toString();
+              document.querySelector('.form_lng').value = e.latlng.lng.toString();
 
-      </script>
+            }
+            map.on('click', onMapClick);
 
-      <%= console.log(mapData[0]) %>
+          </script>
 
-    </div>
-    <div class="map-content">
-      <div class="map-info">
-        <h2>About Map</h2>
-        <h6>Map By: <%= mapData[0].created_by %> </h6>
-        <p><%= mapData[0].description %></p>
+          <%= console.log(mapData[0]) %>
+
+        </div>
+        <div class="map-content">
+          <div class="map-info">
+            <h2>About Map</h2>
+            <h6>Map By: <%= mapData[0].created_by %> </h6>
+            <p><%= mapData[0].description %></p>
+          </div>
+          <div class="map-form">
+            <h3>Add Point</h3>
+            <form action="/maps/pointer" method="post" class="map-form">
+              <input type="text" name="point_title" id="point_title" placeholder="Title">
+              <input type="text" name="point_description" id="point_description" placeholder="Description">
+              <input type="url" name="img_url" id="img_url" placeholder="Image URL">
+              <input type="text" class="form_lat" name="form_lat" id="form_lat" placeholder="Latitude">
+              <input type="text" class="form_lng" name="form_lng" id="form_lng" placeholder="Longitude">
+              <input type="text" name="map_id" id="map_id_hide" value="<%= mapData[0].id %>">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+
       </div>
-      <div class="map-form">
-        <h3>Add Point</h3>
-        <form action="/maps/pointer" method="post" class="map-form">
-          <input type="text" name="point_title" id="point_title" placeholder="Title">
-          <input type="text" name="point_description" id="point_description" placeholder="Description">
-          <input type="url" name="img_url" id="img_url" placeholder="Image URL">
-          <input type="text" class="form_lat" name="form_lat" id="form_lat" placeholder="Latitude">
-          <input type="text" class="form_lng" name="form_lng" id="form_lng" placeholder="Longitude">
-          <input type="text" name="map_id" id="map_id_hide" value="<%= mapData[0].id %>">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
     </div>
 
+    <%- include('partials/_footer') %>
   </div>
-
-  <%- include('partials/_footer') %>
 </body>
 
 </html>
