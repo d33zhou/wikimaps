@@ -73,7 +73,7 @@
           <img src="/images/Toronto-map.png">
           <h3 class="mapList-title"><%= topMapsObj[i].title %></h3>
           <p><%= topMapsObj[i].description %></p>
-          <p>Created by: <a href="/users/<%= topMapsObj[i].creator_id %>"><%= topMapsObj[i].created_by %></a></p>
+          <p>Created by: <a href="/users/contributions/<%= topMapsObj[i].creator_id %>"><%= topMapsObj[i].created_by %></a></p>
         </div>
         <div class="map-buttons">
         <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= topMapsObj[i].id %>">View Map</a>
