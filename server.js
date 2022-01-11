@@ -74,7 +74,7 @@ app.use("/api/maps", mapsRoutes(db));
 
 
 app.get("/", (req, res) => {
-  const queryString = `SELECT *, users.name AS created_by
+  const queryString = `SELECT maps.id AS map_id, users.name AS created_by,maps.title,maps.description
   FROM maps
   JOIN users ON users.id = maps.creator_id
   ORDER BY maps.id DESC
