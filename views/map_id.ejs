@@ -40,6 +40,7 @@
   <div class="container mt-4">
     <p class="hack"><%= JSON.stringify(mapData) %></p>
     <h1>Map: <%= mapData[0].title %></h1>
+
     <div id="map">
       <script>
         const mapData = JSON.parse(document.querySelector('.hack').innerHTML);
@@ -97,12 +98,13 @@
 
       </script>
 
-      <%= console.log(mapData[0].id) %>
+      <%= console.log(mapData[0]) %>
 
     </div>
     <div class="map-content">
       <div class="map-info">
         <h2>About Map</h2>
+        <h6>Map By: <%= mapData[0].created_by %> </h6>
         <p><%= mapData[0].description %></p>
       </div>
       <div class="map-form">

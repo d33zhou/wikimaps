@@ -73,9 +73,8 @@ const mapsRouter = (db) => {
         points.longitude AS longitude
       FROM maps
        JOIN users ON users.id = maps.creator_id
-       JOIN points ON points.map_id = maps.id
-       WHERE maps.id = $1
-       ORDER BY maps.id;
+       LEFT JOIN points ON points.map_id = maps.id
+       WHERE maps.id = $1;
       `;
 
     db.query(queryString, [req.params.id])
