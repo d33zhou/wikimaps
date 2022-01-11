@@ -10,6 +10,7 @@
   <!-- App CSS -->
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/page_nav.css" type="text/css" />
   <link rel="stylesheet" href="/styles/header.css" type="text/css" />
 
   <!-- Bootstrap CSS-->
@@ -40,7 +41,6 @@
       <div class="container mt-4">
         <h1>Maps</h1>
         <div class="mapList-container">
-
           <!-- Generate map card for each map in the query results-->
           <% for (let i = 0; i < Object.keys(mapList).length; i++) { %>
           <div class="mapList-box">
@@ -55,11 +55,12 @@
           <% } %>
 
           <!-- Page selector for search results -->
+
           <div id="page-selector">
-            <span>
-              <nav>< Previous Page</nav>
-              <nav>Next Page ></nav>
-            </span>
+
+            <a href="/maps/<%= Number(page) === 1 ? '#' : (Number(page) - 1) %>" class="page-change">&lt</a>
+            <a href="/maps/<%= (Number(page) + 1) %>" class="page-change">&gt</a>
+
           </div>
 
         </div>

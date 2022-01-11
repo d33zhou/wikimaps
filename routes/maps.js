@@ -83,7 +83,7 @@ const mapsRouter = (db) => {
     const resultsPerPage = 9; // 3x3 grid per page
     const pageNum = req.params.page || 1;
 
-    const queryString = `
+    const queryStringData = `
       SELECT maps.*, users.name AS created_by
       FROM maps
       JOIN users ON users.id = maps.creator_id
@@ -92,16 +92,33 @@ const mapsRouter = (db) => {
       OFFSET $2
       ;`;
 
+    const queryStringPages = `
+      SELECT COUNT(*) FROM maps
+    ;`;
+
     const values = [resultsPerPage, (pageNum - 1) * resultsPerPage];
 
-    return db
-      .query(queryString, values)
-      .then((result) => {
-        res.render('maps', {
-          user: req.session.user_id,
-          mapList: result.rows,
-          page: pageNum,
-        });
+    // first query, to obtain filtered map data to display on page
+    db
+      .query(queryStringData, values)
+      .then(data => { return data.rows })
+      .then(data => {
+
+        // second query, to obtain total map records (for page navigation)
+        db
+          .query(queryStringPages)
+          .then(records => {
+
+            // render view with query results from first and second queries
+            res.render('maps', {
+              user: req.session.user_id,
+              mapList: data.rows,
+              page: pageNum,
+              maxPages: Math.ceil(records / resultsPerPage),
+            });
+
+          });
+
       })
       .catch((err) => {
         res
