@@ -40,8 +40,10 @@ const userRouter = (db) => {
     return db
       .query(queryString, [req.session.user_id])
       .then((result) => {
-        // res.json(result.rows);
-        res.render('fav', { mapList: result.rows });
+        res.render('fav', {
+          user: req.session.user_id,
+          mapList: result.rows
+        });
       })
       .catch((err) => {
         res
@@ -61,7 +63,7 @@ const userRouter = (db) => {
       SELECT *
       FROM points
       WHERE creator_id = $1;
-    `;
+      `;
       const queryString1 = `
           SELECT *
           FROM maps
@@ -74,7 +76,10 @@ const userRouter = (db) => {
         .then((result1) => {
           db.query(queryString,[req.session.user_id])
             .then(result => {
-              res.render('user_contributions', {contributions:result.rows,contributionsMaps:result1});
+              res.render('user_contributions', {
+                user: req.session.user_id,
+                contributions:result.rows,contributionsMaps:result1
+              });
             })
             .catch(err => {
               res
