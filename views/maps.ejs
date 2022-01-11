@@ -49,7 +49,7 @@
               <p><%= mapList[i].description %></p>
               <p>Created by: <a href="/users/contributions/<%= mapList[i].creator_id %>"><%= mapList[i].created_by %></a></p>
             </div>
-            <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= mapList[i].id %>">View Map</a>
+            <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/map/<%= mapList[i].id %>">View Map</a>
           </div>
           <% } %>
         </div>
