@@ -29,24 +29,6 @@ const mapsRouter = (db) => {
   // GET METHODS ----------------------------------------
   //-----------------------------------------------------
 
-  // GET /maps/ --> redirect to GET /maps/1 (page 1 search results default)
-  router.get('/', (req, res) => {
-    res.redirect('/maps/1');
-  })
-
-  // GET /maps/create
-  router.get('/create', (req, res) => {
-    if (!req.session.user_id) {
-      res.redirect('/');
-    }
-
-    res
-      .status(200)
-      .render('map_create', {
-        user: req.session.user_id,
-      });
-  });
-
   // GET /maps/map/:id
   router.get('/map/:id', (req, res) => {
     const queryString = `
@@ -77,6 +59,24 @@ const mapsRouter = (db) => {
       });
   });
 
+  // GET /maps/create
+  router.get('/create', (req, res) => {
+    if (!req.session.user_id) {
+      res.redirect('/');
+    }
+
+    res
+      .status(200)
+      .render('map_create', {
+        user: req.session.user_id,
+      });
+  });
+
+  // GET /maps/ --> redirect to GET /maps/1 (page 1 search results default)
+  router.get('/', (req, res) => {
+    res.redirect('/maps/1');
+  })
+
   // GET /maps/:page
   router.get('/:page', (req, res) => {
 
@@ -100,6 +100,7 @@ const mapsRouter = (db) => {
         res.render('maps', {
           user: req.session.user_id,
           mapList: result.rows,
+          page: pageNum,
         });
       })
       .catch((err) => {
@@ -134,6 +135,7 @@ const mapsRouter = (db) => {
       });
   });
 
+  // POST /maps/pointer
   router.post('/pointer', (req, res) => {
     const queryString = `
     INSERT INTO points (map_id, creator_id, title, description, image, latitude, longitude)
