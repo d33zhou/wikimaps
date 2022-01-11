@@ -1,11 +1,12 @@
 #create-new {
   display: flex;
+  margin: 1.5rem 4rem;
 
-
-  margin-top: 1em;
-  padding: 0 1em;
   gap: 1em;
 
+  h1 {
+    padding-bottom: 2rem;
+  }
 
   form {
     display: flex;
