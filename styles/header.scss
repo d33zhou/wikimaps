@@ -49,14 +49,20 @@ $cream:#E7EFF6;
 }
 
 footer{
-  width:100%;
-}
-
-#footer-base{
   @include navigation;
   @include links-theme;
+
+  position: absolute;
+  bottom: 0;
+
+  height: 3em;
+  width: 100%;
+
   display:flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    margin-bottom: 0;
+  }
 }
-
-
