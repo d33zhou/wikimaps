@@ -55,11 +55,17 @@
           <% } %>
 
           <!-- Page selector for search results -->
-
           <div id="page-selector">
 
-            <a href="/maps/<%= Number(page) === 1 ? 1 : (Number(page) - 1) %>" class="page-change">&lt</a>
-            <a href="/maps/<%= Number(page) >= Number(maxPages) ? maxPages : (Number(page) + 1) %>" class="page-change">&gt</a>
+            <a href="/maps/<%= Number(page) === 1 ? 1 : (Number(page) - 1) %>" class="page-arrow">&lt</a>
+
+            <% for (let pageNum = 1; pageNum <= maxPages; pageNum++) { %>
+
+              <a href="/maps/<%= pageNum %>" class="page-num"><%= pageNum %></a>
+
+            <% } %>
+
+            <a href="/maps/<%= Number(page) >= Number(maxPages) ? maxPages : (Number(page) + 1) %>" class="page-arrow">&gt</a>
 
           </div>
 

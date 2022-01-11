@@ -14,15 +14,28 @@ $cream:#E7EFF6;
     text-decoration: none;
     display: inline-block;
     padding: 10px 20px;
+    //border-radius: 50%;
+  }
+}
 
-    background-color: $dark_blue;
-    color: $cream;
-    border-radius: 50%;
+.page-arrow {
+  background-color: $dark_blue;
+  color: $cream;
 
+  &:hover {
+    background-color: #0e5bcf;
+    color: white;
+    transition: 0.3s;
+  }
+}
 
-    &:hover {
-      background-color: #0e5bcf;
-      transition: 0.3s;
-    }
+.page-num {
+  background-color: #d8d9da;
+  color: black;
+
+  &:hover {
+    background-color: #bcbcbd;
+    color: black;
+    transition: 0.3s;
   }
 }
