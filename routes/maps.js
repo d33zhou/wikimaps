@@ -38,7 +38,7 @@ const mapsRouter = (db) => {
       .then((result) => {
         res.render('maps', {
           user: req.session.user_id,
-          mapList: result.rows
+          mapList: result.rows,
         });
       })
       .catch((err) => {
@@ -46,7 +46,6 @@ const mapsRouter = (db) => {
           .status(500)
           .json({ error: err.message });
       });
-
   });
 
   // GET /maps/create
@@ -83,7 +82,7 @@ const mapsRouter = (db) => {
       .then((result) => {
         res.render('map_id', {
           user: req.session.user_id,
-          mapData: result.rows
+          mapData: result.rows,
         });
       })
       .catch((err) => {
@@ -119,11 +118,11 @@ const mapsRouter = (db) => {
     INSERT INTO points (map_id, creator_id, title, description, image, latitude, longitude)
     VALUES ($1, $2, $3, $4,$5, $6, $7)
     `;
-    const values = [15, req.session.user_id, req.body.point_title, req.body.point_description, req.body.img_url, req.body.form_lat, req.body.form_lng];
+    const values = [req.body.map_id, req.session.user_id, req.body.point_title, req.body.point_description, req.body.img_url, req.body.form_lat, req.body.form_lng];
     db.query(queryString, values)
       .then((result) => {
         res
-          .redirect(`/maps/15`);
+          .redirect(`/maps/${req.body.map_id}`);
       })
       .catch((err) => {
         res
