@@ -40,8 +40,11 @@
 
       <% for (let i = 0; i < Object.keys(contributionsMaps).length; i++) { %>
       <div class="mapList-box">
-        <h3 class="mapList-title"><%= contributionsMaps[i].title %></h3>
-        <p><%= contributionsMaps[i].description %></p>
+        <div class="mapList-info">
+          <img src="/images/Toronto-map.png">
+          <h3 class="mapList-title"><%= contributionsMaps[i].title %></h3>
+          <p><%= contributionsMaps[i].description %></p>
+        </div>
         <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= contributionsMaps[i].id %>">View
           Map</a>
       </div>
@@ -53,11 +56,14 @@
 
       <% for (let i = 0; i < Object.keys(contributions).length; i++) { %>
       <div class="mapList-box">
-        <h3 class="mapList-title"><%= contributions[i].title %></h3>
-        <p><%= contributions[i].description %></p>
-        <img src="<%= contributions[i].image %>" alt="">
-        <p><%= contributions[i].latitude %></p>
-        <p><%= contributions[i].longitude %></p>
+        <div class="mapList-info">
+
+          <img src="<%= contributions[i].image %>" alt="">
+          <h3 class="mapList-title"><%= contributions[i].title %></h3>
+          <p><%= contributions[i].description %></p>
+          <p><%= contributions[i].latitude %></p>
+          <p><%= contributions[i].longitude %></p>
+        </div>
         <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= contributions[i].map_id %>">View
           Map</a>
       </div>
