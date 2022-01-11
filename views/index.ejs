@@ -21,6 +21,9 @@
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
 
+<!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -72,7 +75,10 @@
           <p><%= topMapsObj[i].description %></p>
           <p>Created by: <a href="/users/<%= topMapsObj[i].creator_id %>"><%= topMapsObj[i].created_by %></a></p>
         </div>
+        <div class="map-buttons">
         <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= topMapsObj[i].id %>">View Map</a>
+        <button class = "heart-button"><i class="fas fa-heart"></i></button>
+      </div>
       </div>
       <% } %>
     </div>
