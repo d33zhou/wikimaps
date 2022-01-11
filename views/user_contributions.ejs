@@ -68,6 +68,9 @@
 
           <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= contributions[i].map_id %>">View
             Map</a>
+          <!-- <a type="button" class="btn btn-primary btn-sm mapList-btn"
+            href="/maps/pointer/<%= contributions[i].id %>">Remove
+            Map</a> -->
           <form id="delete_point_btn" method="POST" action="/maps/pointer/<%= contributions[i].id %>">
             <button type="submit" class="btn-danger btn btn-sm mapList-btn">Remove</button>
 
@@ -81,6 +84,7 @@
 
   </div>
   <%- include('partials/_footer') %>
+
 </body>
 
 </html>

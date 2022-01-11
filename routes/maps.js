@@ -130,16 +130,21 @@ const mapsRouter = (db) => {
       });
   });
 
-  router.delete('/pointer/:id', (req, res) => {
+  router.post('/pointer/:id', (req, res) => {
+    // res.send(`response id is ${req.params.id}`);
     const queryString = `
     DELETE FROM points
     WHERE id = $1;
     `;
     const values = [req.params.id];
     db.query(queryString, values)
+    // console.log('abce')
       .then((result) => {
         res
           .redirect(`/users/contributions/`);
+        // res
+        //   .status(204)
+        //   .json({ response: 'Successfully deleted' });
       })
       .catch((err) => {
         res

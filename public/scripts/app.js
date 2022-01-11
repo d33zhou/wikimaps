@@ -3,13 +3,15 @@
 $(document).ready(() => {
   const deletePointBtn = $('#delete_point_btn');
 
-  deletePointBtn.on('submit', (e) => {
+  $('#delete_point_btn').submit((e) => {
     e.preventDefault();
-    $.delete('/maps/pointer/:id');
-    // $.ajax({
-    //   method: 'DELETE',
-    //   url: '/maps/pointer/:id',
+    $.post('/maps/pointer/:id');
+    // eslint-disable-next-line prefer-arrow-callback
+    // $.post('/maps/pointer/:id', (data) => {
+    //   console.log(data);
+    //   if (data.status === 204 && data.response === 'Successfully deleted') {
+    //     console.log('it worked!!');
+    //   }
     // });
   });
-  console.log(deletePointBtn);
 });
