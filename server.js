@@ -70,19 +70,19 @@ app.use("/api/maps", mapsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-
-
-
 app.get("/", (req, res) => {
   const queryString = `SELECT *, users.name AS created_by
   FROM maps
   JOIN users ON users.id = maps.creator_id
   ORDER BY maps.id DESC
   LIMIT 3;`;
+
   db.query(queryString)
     .then(result => {
-      console.log(result.rows);
-      return res.render("index",{topMapsObj:result.rows});
+      return res.render("index", {
+        user: req.session.user_id,
+        topMapsObj: result.rows
+      });
     })
     .catch((err) => {
       res
@@ -90,9 +90,6 @@ app.get("/", (req, res) => {
         .json({ error: err.message });
     });
 });
-
-
-
 
 app.listen(PORT, () => {
   console.log(`Wiki Maps listening on port ${PORT}`);

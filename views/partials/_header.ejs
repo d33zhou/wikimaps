@@ -1,15 +1,33 @@
 <header>
   <nav class ="navigation_bar">
-    <a href="http://localhost:8080/" id = "logo">Wiki Maps</a>
-    <a href="http://localhost:8080/maps/" id = "maps-link">View maps</a>
-    <a href="http://localhost:8080/users/favourites" id="maps-favourites">My Favourites</a>
-    <a href="http://localhost:8080/users/contributions" id="maps-contributions">My Contributions</a>
-    <a href="http://localhost:8080/maps/create" id="maps-creation">Create A Map</a>
-    <button type="button" class="btn btn-light">Register</button>
+    <section class="nav-links">
+      <a href="http://localhost:8080/" id = "logo">Wiki Maps</a>
+      <a href="http://localhost:8080/maps/" id = "maps-link">View maps</a>
+      <a href="http://localhost:8080/users/favourites" id="maps-favourites">My Favourites</a>
+      <a href="http://localhost:8080/users/contributions" id="maps-contributions">My Contributions</a>
+      <a href="http://localhost:8080/maps/create" id="maps-creation">Create A Map</a>
+    </section>
 
-    <form method="GET" action="/users/login/1">
-      <button type="submit" class="btn btn-light">Log In</button>
-    </form>
+    <section class="nav-buttons">
 
+      <% if (!user) { %>
+
+        <div id="register-login">
+          <button type="button" class="btn btn-light">Register</button>
+
+          <form method="GET" action="/users/login/1">
+            <button type="submit" class="btn btn-light">Log In</button>
+          </form>
+        </div>
+
+      <% } else { %>
+
+        <form method="GET" action="/users/logout">
+          <button type="submit" class="btn btn-light">Log Out</button>
+        </form>
+
+      <% } %>
+
+    </section>
   </nav>
 </header>

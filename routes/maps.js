@@ -36,8 +36,10 @@ const mapsRouter = (db) => {
     return db
       .query(queryString)
       .then((result) => {
-        // res.json(result.rows);
-        res.render('maps', { mapList: result.rows });
+        res.render('maps', {
+          user: req.session.user_id,
+          mapList: result.rows
+        });
       })
       .catch((err) => {
         res
@@ -45,7 +47,6 @@ const mapsRouter = (db) => {
           .json({ error: err.message });
       });
 
-    // res.render('maps', { mapList: result.rows });
   });
 
   // GET /maps/create
@@ -56,7 +57,9 @@ const mapsRouter = (db) => {
 
     res
       .status(200)
-      .render('map_create');
+      .render('map_create', {
+        user: req.session.user_id,
+      });
   });
 
   // GET /maps/:id
@@ -78,8 +81,10 @@ const mapsRouter = (db) => {
 
     db.query(queryString, [req.params.id])
       .then((result) => {
-        console.log(result.rows);
-        res.render('map_id', { mapData: result.rows });
+        res.render('map_id', {
+          user: req.session.user_id,
+          mapData: result.rows
+        });
       })
       .catch((err) => {
         res
