@@ -24,11 +24,17 @@ app.use(cookieSession({
 }));
 
 const mapsRouter = (db) => {
+
+  // GET /maps/ --> redirect to GET /maps/1 (page 1 search results default)
+  router.get('/', (req, res) => {
+    res.redirect('/maps/1');
+  })
+
   // GET /maps/:page
   router.get('/:page', (req, res) => {
 
     const resultsPerPage = 9; // 3x3 grid per page
-    const pageNum = req.params.page;
+    const pageNum = req.params.page || 1;
 
     const queryString = `
       SELECT maps.*, users.name AS created_by
