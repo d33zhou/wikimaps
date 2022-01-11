@@ -140,11 +140,11 @@ const mapsRouter = (db) => {
     db.query(queryString, values)
     // console.log('abce')
       .then((result) => {
-        res
-          .redirect(`/users/contributions/`);
-        // res
-        //   .status(204)
-        //   .json({ response: 'Successfully deleted' });
+        console.log('point has been deleted');
+        res.status(200);
+        res.end();
+        return result;
+        // res.redirect('/users/contributions/');
       })
       .catch((err) => {
         res
