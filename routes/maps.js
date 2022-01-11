@@ -24,17 +24,25 @@ app.use(cookieSession({
 }));
 
 const mapsRouter = (db) => {
-  // GET /maps/
-  router.get('/', (req, res) => {
+  // GET /maps/:page
+  router.get('/:page', (req, res) => {
+
+    const resultsPerPage = 9; // 3x3 grid per page
+    const pageNum = req.params.page;
+
     const queryString = `
       SELECT maps.*, users.name AS created_by
       FROM maps
       JOIN users ON users.id = maps.creator_id
-      ORDER BY id DESC;
-      `;
+      ORDER BY id DESC
+      LIMIT $1
+      OFFSET $2
+      ;`;
+
+    const values = [resultsPerPage, (pageNum - 1) * resultsPerPage];
 
     return db
-      .query(queryString)
+      .query(queryString, values)
       .then((result) => {
         res.render('maps', {
           user: req.session.user_id,
@@ -61,8 +69,8 @@ const mapsRouter = (db) => {
       });
   });
 
-  // GET /maps/:id
-  router.get('/:id', (req, res) => {
+  // GET /maps/map/:id
+  router.get('/map/:id', (req, res) => {
     const queryString = `
       SELECT maps.*,
         users.name AS created_by,
