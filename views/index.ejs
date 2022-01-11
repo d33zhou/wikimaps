@@ -62,12 +62,16 @@
       </div>
 
     </div> <!-- map container -->
+    <% let favArray = []; %>
+    <%for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
 
+      <%= favArray.push(favMapsObj[i].map_id); %>
+      <% } %>
+      <%= console.log(favArray); %>
     <div class="mapList-container">
       <% for (let i = 0; i < Object.keys(topMapsObj).length; i++) { %>
       <div class="mapList-box">
         <div class="mapList-info">
-
           <img src="/images/Toronto-map.png">
           <h3 class="mapList-title"><%= topMapsObj[i].title %></h3>
           <p><%= topMapsObj[i].description %></p>
@@ -75,8 +79,16 @@
         </div>
         <div class="map-buttons">
         <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= topMapsObj[i].id %>">View Map</a>
-        <button class = "heart-button"><i class="fas fa-heart"></i></button>
-      </div>
+              <% if(favArray.includes(topMapsObj[i].id)){ %>
+              <button class = "heart-button-<%=[i] %>">
+              <i style = "color:red" class="fas fa-heart"></i>
+              </button>
+              <% } else {%>
+              <button class = "heart-button-<%=[i] %>">
+                <i class="fas fa-heart"></i>
+                </button>
+                <% } %>
+        </div>
       </div>
       <% } %>
     </div>
