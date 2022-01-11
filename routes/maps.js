@@ -16,6 +16,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const cookieSession = require('cookie-session');
+const res = require('express/lib/response');
 
 app.use(cookieSession({
   name: "session",
@@ -70,13 +71,14 @@ const mapsRouter = (db) => {
         points.longitude AS longitude
       FROM maps
        JOIN users ON users.id = maps.creator_id
-       JOIN points ON points.creator_id = maps.creator_id
+       JOIN points ON points.map_id = maps.id
        WHERE maps.id = $1
        ORDER BY maps.id;
       `;
 
     db.query(queryString, [req.params.id])
       .then((result) => {
+        console.log(result.rows);
         res.render('map_id', { mapData: result.rows });
       })
       .catch((err) => {
@@ -107,11 +109,22 @@ const mapsRouter = (db) => {
       });
   });
 
-  router.post('/point', (req, res) => {
+  router.post('/pointer', (req, res) => {
     const queryString = `
     INSERT INTO points (map_id, creator_id, title, description, image, latitude, longitude)
     VALUES ($1, $2, $3, $4,$5, $6, $7)
     `;
+    const values = [15, req.session.user_id, req.body.point_title, req.body.point_description, req.body.img_url, req.body.form_lat, req.body.form_lng];
+    db.query(queryString, values)
+      .then((result) => {
+        res
+          .redirect(`/maps/15`);
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   });
 
   return router;

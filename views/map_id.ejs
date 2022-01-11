@@ -61,6 +61,7 @@
         })
 
         for (let i = 0; i < Object.keys(mapData).length; i++) {
+          // console.log(mapData.length)
           marker = new L.marker([mapData[i].latitude, mapData[i].longitude], {
               icon: newIcon
             })
@@ -88,8 +89,8 @@
           // mapLatitude = e.latlng.lat;
           // mapLongitude = e.latlng.lng;
 
-          document.querySelector('.form-lat').value = e.latlng.lat.toString();
-          document.querySelector('.form-lng').value = e.latlng.lng.toString();
+          document.querySelector('.form_lat').value = e.latlng.lat.toString();
+          document.querySelector('.form_lng').value = e.latlng.lng.toString();
 
         }
         map.on('click', onMapClick);
@@ -106,12 +107,13 @@
       </div>
       <div class="map-form">
         <h3>Add Point</h3>
-        <form action="/pointer" method="post" class="map-form">
-          <input type="text" name="point-title" id="point-title" placeholder="Title">
-          <input type="text" name="point-description" id="point-description" placeholder="Description">
-          <input type="text" class="form-lat" name="form-lat" id="form-lat" placeholder="Latitude">
-          <input type="text" class="form-lng" name="form-lng" id="form-lng" placeholder="Longitude">
-          <button type="button" class="btn btn-primary">Submit</button>
+        <form action="/maps/pointer" method="post" class="map-form">
+          <input type="text" name="point_title" id="point_title" placeholder="Title">
+          <input type="text" name="point_description" id="point_description" placeholder="Description">
+          <input type="url" name="img_url" id="img_url" placeholder="Image URL">
+          <input type="text" class="form_lat" name="form_lat" id="form_lat" placeholder="Latitude">
+          <input type="text" class="form_lng" name="form_lng" id="form_lng" placeholder="Longitude">
+          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
