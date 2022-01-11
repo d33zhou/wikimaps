@@ -15,10 +15,16 @@ $cream:#E7EFF6;
 }
 .navigation_bar{
   @include navigation;
+
+  position: fixed;
+  top: 0;
+
+  height: 7.5vh;
+  width: 100%;
+
   display:flex;
   justify-content:space-between;
   align-items:center;
-  height: 10vh;
 
   #logo{
     @include links-theme;
@@ -45,6 +51,10 @@ $cream:#E7EFF6;
     flex-direction: row;
     justify-content: flex-end;
     gap: 1em;
+  }
+
+  button:hover {
+    transform: scale(1.05);
   }
 }
 
