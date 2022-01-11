@@ -5,11 +5,21 @@
     <a href="http://localhost:8080/users/favourites" id="maps-favourites">My Favourites</a>
     <a href="http://localhost:8080/users/contributions" id="maps-contributions">My Contributions</a>
     <a href="http://localhost:8080/maps/create" id="maps-creation">Create A Map</a>
+
+<% if (!user) { %>
+
     <button type="button" class="btn btn-light">Register</button>
 
     <form method="GET" action="/users/login/1">
       <button type="submit" class="btn btn-light">Log In</button>
     </form>
 
+<% } else { %>
+
+    <form method="GET" action="/users/logout">
+      <button type="submit" class="btn btn-light">Log Out</button>
+    </form>
+
+<% } %>
   </nav>
 </header>
