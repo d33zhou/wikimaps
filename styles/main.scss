@@ -20,3 +20,25 @@
     color:header.$dark_blue;
   }
 }
+
+.map-buttons{
+  display:flex;
+  justify-content: space-between;
+}
+.fa-heart{
+  color:lightpink;
+  font-size: 1.5em;
+}
+.fa-heart:hover{
+  color:red;
+}
+
+.heart-button
+{
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: inherit;
+}
+
