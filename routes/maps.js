@@ -139,7 +139,7 @@ const mapsRouter = (db) => {
     db.query(queryString, values)
       .then((result) => {
         res
-          .redirect(`/users/contributions`);
+          .redirect(`/users/contributions/`);
       })
       .catch((err) => {
         res
