@@ -117,7 +117,7 @@ const mapsRouter = (db) => {
       .then((result) => {
         res
           .status(200)
-          .redirect(`/maps/${result.rows[0].id}`);
+          .redirect(`/maps/map/${result.rows[0].id}`);
       })
       .catch((err) => {
         res
@@ -135,7 +135,7 @@ const mapsRouter = (db) => {
     db.query(queryString, values)
       .then((result) => {
         res
-          .redirect(`/maps/${req.body.map_id}`);
+          .redirect(`/maps/map/${req.body.map_id}`);
       })
       .catch((err) => {
         res
