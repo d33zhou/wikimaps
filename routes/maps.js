@@ -16,9 +16,10 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const cookieSession = require('cookie-session');
+
 app.use(cookieSession({
   name: "session",
-  keys: ['key1', 'key2']
+  keys: ['key1', 'key2'],
 }));
 
 const mapsRouter = (db) => {
@@ -104,6 +105,13 @@ const mapsRouter = (db) => {
           .status(500)
           .json({ error: err.message });
       });
+  });
+
+  router.post('/point', (req, res) => {
+    const queryString = `
+    INSERT INTO points (map_id, creator_id, title, description, image, latitude, longitude)
+    VALUES ($1, $2, $3, $4,$5, $6, $7)
+    `;
   });
 
   return router;
