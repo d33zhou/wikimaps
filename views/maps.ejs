@@ -41,6 +41,7 @@
         <h1>Maps</h1>
         <div class="mapList-container">
 
+          <!-- Generate map card for each map in the query results-->
           <% for (let i = 0; i < Object.keys(mapList).length; i++) { %>
           <div class="mapList-box">
             <div class="mapList-info">
@@ -52,6 +53,15 @@
             <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/map/<%= mapList[i].id %>">View Map</a>
           </div>
           <% } %>
+
+          <!-- Page selector for search results -->
+          <div id="page-selector">
+            <span>
+              <nav>< Previous Page</nav>
+              <nav>Next Page ></nav>
+            </span>
+          </div>
+
         </div>
 
       </div>
