@@ -19,13 +19,13 @@ html {
   &-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 40px;
+    margin-bottom: 40px;
   }
   &-box {
     border: 1px solid lightgray;
     width: 31%;
-    margin-top: 40px;
-    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
     padding: 2rem;

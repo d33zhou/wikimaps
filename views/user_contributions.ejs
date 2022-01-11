@@ -35,40 +35,39 @@
   <%- include('partials/_header') %>
   <div class="container mt-4">
     <h1>Contributions</h1>
-    <div class="container mt-4">
-      <h2>Maps</h2>
-      <div class="mapList-container">
+    <h2>Maps</h2>
+    <div class="mapList-container">
 
-        <% for (let i = 0; i < Object.keys(contributionsMaps).length; i++) { %>
-        <div class="mapList-box">
-          <h3 class="mapList-title"><%= contributionsMaps[i].title %></h3>
-          <p><%= contributionsMaps[i].description %></p>
-          <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= contributionsMaps[i].id %>">View
-            Map</a>
-        </div>
-        <% } %>
+      <% for (let i = 0; i < Object.keys(contributionsMaps).length; i++) { %>
+      <div class="mapList-box">
+        <h3 class="mapList-title"><%= contributionsMaps[i].title %></h3>
+        <p><%= contributionsMaps[i].description %></p>
+        <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= contributionsMaps[i].id %>">View
+          Map</a>
       </div>
-      <div class="container mt-4">
-        <h2>Points</h2>
-        <div class="mapList-container">
+      <% } %>
+    </div>
 
-          <% for (let i = 0; i < Object.keys(contributions).length; i++) { %>
-          <div class="mapList-box">
-            <h3 class="mapList-title"><%= contributions[i].title %></h3>
-            <p><%= contributions[i].description %></p>
-            <img src="<%= contributions[i].image %>" alt="">
-            <p><%= contributions[i].latitude %></p>
-            <p><%= contributions[i].longitude %></p>
-            <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= contributions[i].map_id %>">View
-              Map</a>
-          </div>
-          <% } %>
-        </div>
-        <%- console.log(contributions) %>
-        <%- console.log(contributionsMaps) %>
+    <h2>Points</h2>
+    <div class="mapList-container">
+
+      <% for (let i = 0; i < Object.keys(contributions).length; i++) { %>
+      <div class="mapList-box">
+        <h3 class="mapList-title"><%= contributions[i].title %></h3>
+        <p><%= contributions[i].description %></p>
+        <img src="<%= contributions[i].image %>" alt="">
+        <p><%= contributions[i].latitude %></p>
+        <p><%= contributions[i].longitude %></p>
+        <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= contributions[i].map_id %>">View
+          Map</a>
       </div>
+      <% } %>
+    </div>
+    <%- console.log(contributions) %>
+    <%- console.log(contributionsMaps) %>
 
-      <%- include('partials/_footer') %>
+  </div>
+  <%- include('partials/_footer') %>
 </body>
 
 </html>
