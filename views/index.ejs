@@ -80,11 +80,13 @@
         <div class="map-buttons">
         <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/map/<%= topMapsObj[i].id %>">View Map</a>
               <% if(favArray.includes(topMapsObj[i].id)){ %>
-              <button class = "heart-button" data-map-id ="<%= topMapsObj[i].id %>">
+              <button class = "heart-button" data-map-id ="<%= topMapsObj[i].id %>"
+                data-user-id="<%- user %>">
               <i class="fas fa-heart fa-heart-fav"></i>
               </button>
               <% } else {%>
-              <button class = "heart-button" data-map-id ="<%= topMapsObj[i].id %>">
+              <button class = "heart-button" data-map-id ="<%= topMapsObj[i].id %>"
+                data-user-id="<%- user %>">
                 <i class="fas fa-heart"></i>
                 </button>
                 <% } %>

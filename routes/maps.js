@@ -43,13 +43,22 @@ const mapsRouter = (db) => {
        LEFT JOIN points ON points.map_id = maps.id
        WHERE maps.id = $1;
       `;
+    const queryString1 = `
+  SELECT map_id
+  FROM favourites
+  WHERE user_id = $1;`;
 
-    db.query(queryString, [req.params.id])
-      .then((result) => {
-        res.render('map_id', {
-          user: req.session.user_id,
-          mapData: result.rows,
-        });
+    db.query(queryString1, [req.session.user_id])
+      .then((result1) => result1.rows)
+      .then((result1) => {
+        db.query(queryString, [req.params.id])
+          .then((result) => {
+            res.render('map_id', {
+              user: req.session.user_id,
+              mapData: result.rows,
+              favMapsObj: result1,
+            });
+          });
       })
       .catch((err) => {
         res

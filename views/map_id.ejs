@@ -21,6 +21,9 @@
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
 
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -37,12 +40,28 @@
 <body>
   <div id="page-container">
     <%- include('partials/_header') %>
+    <% let favArray = []; %>
+    <%for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
+      <% favArray.push(favMapsObj[i].map_id); %>
+      <% } %>
 
     <div id="content-wrap">
       <div class="container mt-4">
         <p class="hack"><%= JSON.stringify(mapData) %></p>
+        <div class = "map-heart">
         <h1>Map: <%= mapData[0].title %></h1>
-
+        <% if(favArray.includes(mapData[0].id)){ %>
+          <button class = "heart-button" data-map-id ="<%= mapData[0].id %>"
+            data-user-id="<%- user %>">
+          <i class="fas fa-heart fa-heart-fav heart-map-id"></i>
+          </button>
+          <% } else {%>
+          <button class = "heart-button" data-map-id ="<%= mapData[0].id %>"
+            data-user-id="<%- user %>">
+            <i class="fas fa-heart heart-map-id"></i>
+            </button>
+            <% } %>
+          </div>
         <div id="map">
           <script>
             const mapData = JSON.parse(document.querySelector('.hack').innerHTML);
