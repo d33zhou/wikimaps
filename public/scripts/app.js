@@ -2,15 +2,16 @@
 $(document).ready(function() {
   $('.heart-button').on('click',function() {
     const map_id = $(this).attr('data-map-id');
+    const user_id = $(this).attr('data-user-id');
     console.log(map_id);
-    const icon = $(this).find('i')
-    if (icon.hasClass('fa-heart-fav')) {
+    const icon = $(this).find('i');
+    if (icon.hasClass('fa-heart-fav') && user_id) {
       icon.removeClass('fa-heart-fav');
       console.log('trying to remove class');
       $.post("http://localhost:8080/users/favourites/delete",{map_id:map_id},function(data,status) {
         console.log("deleting record inside post",data);
       });
-    } else {
+    } else if (user_id) {
       icon.addClass('fa-heart-fav');
       console.log('trying to add class');
       $.ajax({
