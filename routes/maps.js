@@ -44,13 +44,22 @@ const mapsRouter = (db) => {
        LEFT JOIN points ON points.map_id = maps.id
        WHERE maps.id = $1;
       `;
+    const queryString1 = `
+  SELECT map_id
+  FROM favourites
+  WHERE user_id = $1;`;
 
-    db.query(queryString, [req.params.id])
-      .then((result) => {
-        res.render('map_id', {
-          user: req.session.user_id,
-          mapData: result.rows,
-        });
+    db.query(queryString1,[req.session.user_id])
+      .then(result1 => result1.rows)
+      .then(result1 => {
+        db.query(queryString, [req.params.id])
+          .then((result) => {
+            res.render('map_id', {
+              user: req.session.user_id,
+              mapData: result.rows,
+              favMapsObj:result1
+            });
+          });
       })
       .catch((err) => {
         res
@@ -75,7 +84,7 @@ const mapsRouter = (db) => {
   // GET /maps/ --> redirect to GET /maps/1 (page 1 search results default)
   router.get('/', (req, res) => {
     res.redirect('/maps/1');
-  })
+  });
 
   // GET /maps/:page
   router.get('/:page', (req, res) => {
@@ -125,7 +134,9 @@ const mapsRouter = (db) => {
     // first query, to obtain total map records (for page navigation)
     db
       .query(queryStringPages)
-      .then(records => { return records.rows[0] })
+      .then(records => {
+        return records.rows[0];
+      })
       .then(records => {
 
         // second query, to obtain favourites results
