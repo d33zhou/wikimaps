@@ -81,7 +81,7 @@ const mapsRouter = (db) => {
   router.get('/:page', (req, res) => {
 
     const resultsPerPage = 9; // 3x3 grid per page
-    const pageNum = req.params.page || 1;
+    const pageNum = Number(req.params.page) || 1;
 
     const queryStringData = `
       SELECT maps.*, users.name AS created_by

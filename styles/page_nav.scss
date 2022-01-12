@@ -38,3 +38,12 @@ $cream:#E7EFF6;
     transition: 0.3s;
   }
 }
+
+.page-current {
+  background-color: #919292;
+  color: black;
+
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
