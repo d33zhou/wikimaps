@@ -57,15 +57,20 @@
           <!-- Page selector for search results -->
           <div id="page-selector">
 
-            <a href="/maps/<%= Number(page) === 1 ? 1 : (Number(page) - 1) %>" class="page-arrow">&lt</a>
-
-            <% for (let pageNum = 1; pageNum <= maxPages; pageNum++) { %>
-
-              <a href="/maps/<%= pageNum %>" class="page-num"><%= pageNum %></a>
-
+            <!-- Show previous button if not on first page -->
+            <% if (page > 1) { %>
+              <a href="/maps/<%= (Number(page) - 1) %>" class="page-arrow"><strong>&lt</strong></a>
             <% } %>
 
-            <a href="/maps/<%= Number(page) >= Number(maxPages) ? maxPages : (Number(page) + 1) %>" class="page-arrow">&gt</a>
+            <!-- Create a button for each page of results -->
+            <% for (let pageNum = 1; pageNum <= maxPages; pageNum++) { %>
+              <a href="/maps/<%= pageNum %>" class="page-num"><%= pageNum %></a>
+            <% } %>
+
+            <!-- Show next button if not on last page -->
+            <% if (page < maxPages) { %>
+              <a href="/maps/<%= (Number(page) + 1) %>" class="page-arrow"><strong>&gt</strong></a>
+            <% } %>
 
           </div>
 
