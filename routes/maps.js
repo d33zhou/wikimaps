@@ -24,7 +24,6 @@ app.use(cookieSession({
 }));
 
 const mapsRouter = (db) => {
-
   //-----------------------------------------------------
   // GET METHODS ----------------------------------------
   //-----------------------------------------------------
@@ -75,11 +74,10 @@ const mapsRouter = (db) => {
   // GET /maps/ --> redirect to GET /maps/1 (page 1 search results default)
   router.get('/', (req, res) => {
     res.redirect('/maps/1');
-  })
+  });
 
   // GET /maps/:page
   router.get('/:page', (req, res) => {
-
     const resultsPerPage = 9; // 3x3 grid per page
     const pageNum = Number(req.params.page) || 1;
 
@@ -125,20 +123,17 @@ const mapsRouter = (db) => {
     // first query, to obtain total map records (for page navigation)
     db
       .query(queryStringPages)
-      .then(records => { return records.rows[0] })
-      .then(records => {
-
+      .then((records) => records.rows[0])
+      .then((records) => {
         // second query, to obtain favourites results
         db
           .query(queryStringFav, [req.session.user_id])
-          .then(favResults => favResults.rows)
-          .then(favResults => {
-
+          .then((favResults) => favResults.rows)
+          .then((favResults) => {
             // third query, to obtain filtered map data to display on page
             db
               .query(queryStringData, values)
-              .then(data => {
-
+              .then((data) => {
                 // render view with query results from all queries
                 res.render('maps', {
                   user: req.session.user_id,
@@ -149,11 +144,8 @@ const mapsRouter = (db) => {
                   maxPages: Math.ceil(records.count / resultsPerPage),
                   totalRecords: records.count,
                 });
-
               });
-
           });
-
       })
       .catch((err) => {
         res
@@ -226,6 +218,34 @@ const mapsRouter = (db) => {
         res
           .status(500)
           .json({ error: err.message });
+      });
+  });
+
+  router.post('/pointer/edit/:id', (req, res) => {
+    const queryString = `
+    UPDATE points
+    SET title = $1,
+        description = $2,
+        latitude = $3,
+        longitude = $4
+    WHERE id = $5;
+    `;
+    const values = [
+      req.body.point_title,
+      req.body.point_desc,
+      req.body.point_lat,
+      req.body.point_lng,
+      req.params.id];
+    db.query(queryString, values)
+      .then((result) => {
+        res.status(200);
+        res.end();
+        return result;
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: err.message, value: values });
       });
   });
 
