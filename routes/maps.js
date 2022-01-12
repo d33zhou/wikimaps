@@ -32,23 +32,29 @@ const mapsRouter = (db) => {
       JOIN users ON users.id = maps.creator_id
       ORDER BY id DESC;
       `;
-  //   const queryString1 = `
-  // SELECT map_id
-  // FROM favourites
-  // WHERE user_id = $1;`;
 
-    return db
-      .query(queryString)
-      .then((result) => {
-        res.render('maps', {
-          user: req.session.user_id,
-          mapList: result.rows,
-        });
-      })
-      .catch((err) => {
-        res
-          .status(500)
-          .json({ error: err.message });
+    const queryString1 = `
+      SELECT map_id
+      FROM favourites
+      WHERE user_id = $1;`;
+
+    db
+      .query(queryString1,[req.session.user_id])
+      .then(result1 => result1.rows)
+      .then((result1) => {
+        db.query(queryString)
+          .then((result) => {
+            res.render('maps', {
+              user: req.session.user_id,
+              mapList: result.rows,
+              favMapsObj:result1,
+            });
+          })
+          .catch((err) => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
       });
   });
 

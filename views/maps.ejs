@@ -21,6 +21,9 @@
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
 
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -38,8 +41,11 @@
   <div id="content-wrap">
   <div class="container mt-4">
     <h1>Maps</h1>
+    <% let favArray = []; %>
+    <%for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
+      <% favArray.push(favMapsObj[i].map_id); %>
+      <% } %>
     <div class="mapList-container">
-
       <% for (let i = 0; i < Object.keys(mapList).length; i++) { %>
       <div class="mapList-box">
         <div class="mapList-info">
@@ -48,7 +54,18 @@
           <p><%= mapList[i].description %></p>
           <p>Created by: <a href="/users/<%= mapList[i].creator_id %>"><%= mapList[i].created_by %></a></p>
         </div>
+        <div class="map-buttons">
         <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/<%= mapList[i].id %>">View Map</a>
+        <% if(favArray.includes(mapList[i].id)){ %>
+          <button class = "heart-button" data-map-id ="<%= mapList[i].id %>">
+          <i class="fas fa-heart fa-heart-fav"></i>
+          </button>
+          <% } else {%>
+          <button class = "heart-button" data-map-id ="<%= mapList[i].id %>">
+            <i class="fas fa-heart"></i>
+            </button>
+            <% } %>
+          </div>
       </div>
       <% } %>
       <!-- <%= Object.keys(mapList[0]) %> -->
