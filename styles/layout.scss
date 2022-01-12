@@ -38,6 +38,10 @@ body {
     justify-content: space-between;
     padding: 2rem;
   }
+  &-img{
+    height: 200px;
+    overflow: hidden;
+  }
   &-info {
     width: 100%;
     display: flex;
