@@ -22,6 +22,7 @@ app.use(cookieSession({
 }));
 
 const userRouter = (db) => {
+
   // GET /users/favourites
   router.get('/favourites', (req, res) => {
     if (!req.session.user_id) {
