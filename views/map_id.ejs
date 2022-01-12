@@ -132,7 +132,20 @@
             <h2>About Map</h2>
             <h6>Map By: <%= mapData[0].created_by %> </h6>
             <p><%= mapData[0].description %></p>
+            <div class="mapList-container">
+              <% for (let i = 0; i < Object.keys(mapData).length; i++) { %>
+              <div class="mapList-box">
+                <div class="mapList-info">
+
+                  <img src="<%= mapData[i].point_img %>" alt="" class="points-image">
+                  <h3 class="mapList-title"><%= mapData[i].point_name %></h3>
+                  <p><%= mapData[i].point_description %></p>
+                  <p><%= mapData[i].latitude %></p>
+                  <p><%= mapData[i].longitude %></p>
+                </div>
           </div>
+          <% } %>
+
           <div class="map-form">
             <h3>Add Point</h3>
             <form action="/maps/pointer" method="post" class="map-form">
@@ -144,6 +157,7 @@
               <input type="text" name="map_id" id="map_id_hide" value="<%= mapData[0].id %>">
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            </div>
           </div>
         </div>
 
