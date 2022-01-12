@@ -78,8 +78,9 @@ body {
 .map-heart{
   display:flex;
   justify-content:space-between;
+  &-id{
+    font-size:2em;
+  }
 }
-.heart-map-id{
-  font-size:2em;
-}
+
 

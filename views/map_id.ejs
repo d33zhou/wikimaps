@@ -47,18 +47,23 @@
 
     <div id="content-wrap">
       <div class="container mt-4">
+        
+        <!-- Error-message -->
+    <div class="error-message error-message-1">
+      <i class="fa fa-times-circle ">Please login or register!</i>
+    </div>
         <p class="hack"><%= JSON.stringify(mapData) %></p>
         <div class = "map-heart">
         <h1>Map: <%= mapData[0].title %></h1>
         <% if(favArray.includes(mapData[0].id)){ %>
           <button class = "heart-button" data-map-id ="<%= mapData[0].id %>"
             data-user-id="<%- user %>">
-          <i class="fas fa-heart fa-heart-fav heart-map-id"></i>
+          <i class="fas fa-heart fa-heart-fav map-heart-id"></i>
           </button>
           <% } else {%>
           <button class = "heart-button" data-map-id ="<%= mapData[0].id %>"
             data-user-id="<%- user %>">
-            <i class="fas fa-heart heart-map-id"></i>
+            <i class="fas fa-heart map-heart-id"></i>
             </button>
             <% } %>
           </div>
