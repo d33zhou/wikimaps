@@ -24,7 +24,6 @@ app.use(cookieSession({
 }));
 
 const mapsRouter = (db) => {
-
   //-----------------------------------------------------
   // GET METHODS ----------------------------------------
   //-----------------------------------------------------
@@ -49,15 +48,15 @@ const mapsRouter = (db) => {
   FROM favourites
   WHERE user_id = $1;`;
 
-    db.query(queryString1,[req.session.user_id])
-      .then(result1 => result1.rows)
-      .then(result1 => {
+    db.query(queryString1, [req.session.user_id])
+      .then((result1) => result1.rows)
+      .then((result1) => {
         db.query(queryString, [req.params.id])
           .then((result) => {
             res.render('map_id', {
               user: req.session.user_id,
               mapData: result.rows,
-              favMapsObj:result1
+              favMapsObj: result1,
             });
           });
       })
@@ -88,7 +87,6 @@ const mapsRouter = (db) => {
 
   // GET /maps/:page
   router.get('/:page', (req, res) => {
-
     const resultsPerPage = 9; // 3x3 grid per page
     const pageNum = Number(req.params.page) || 1;
 
@@ -134,22 +132,17 @@ const mapsRouter = (db) => {
     // first query, to obtain total map records (for page navigation)
     db
       .query(queryStringPages)
-      .then(records => {
-        return records.rows[0];
-      })
-      .then(records => {
-
+      .then((records) => records.rows[0])
+      .then((records) => {
         // second query, to obtain favourites results
         db
           .query(queryStringFav, [req.session.user_id])
-          .then(favResults => favResults.rows)
-          .then(favResults => {
-
+          .then((favResults) => favResults.rows)
+          .then((favResults) => {
             // third query, to obtain filtered map data to display on page
             db
               .query(queryStringData, values)
-              .then(data => {
-
+              .then((data) => {
                 // render view with query results from all queries
                 res.render('maps', {
                   user: req.session.user_id,
@@ -160,11 +153,8 @@ const mapsRouter = (db) => {
                   maxPages: Math.ceil(records.count / resultsPerPage),
                   totalRecords: records.count,
                 });
-
               });
-
           });
-
       })
       .catch((err) => {
         res
@@ -237,6 +227,36 @@ const mapsRouter = (db) => {
         res
           .status(500)
           .json({ error: err.message });
+      });
+  });
+
+  router.post('/pointer/edit/:id', (req, res) => {
+    const queryString = `
+    UPDATE points
+    SET title = $1,
+        description = $2,
+        latitude = $3,
+        longitude = $4
+    WHERE id = $5;
+    `;
+    const values = [
+      req.body.point_title,
+      req.body.point_desc,
+      req.body.point_lat,
+      req.body.point_lng,
+      req.params.id];
+    db.query(queryString, values)
+      .then((result) => {
+        // res.status(200).send();
+        console.log("successfully edited point", req.params.id);
+        res.end();
+      })
+      .catch((err) => {
+        console.log(req.body);
+        console.log('error ', err);
+        res
+          .status(500)
+          .json({ error: err.message, value: values });
       });
   });
 

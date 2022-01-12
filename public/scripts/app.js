@@ -1,6 +1,6 @@
 // Client facing scripts here
-$(document).ready(function() {
-  $('.heart-button').on('click',function() {
+$(document).ready(() => {
+  $('.heart-button').on('click', function() {
     const map_id = $(this).attr('data-map-id');
     const user_id = $(this).attr('data-user-id');
     console.log(map_id);
@@ -8,27 +8,23 @@ $(document).ready(function() {
     if (icon.hasClass('fa-heart-fav') && user_id) {
       icon.removeClass('fa-heart-fav');
       console.log('trying to remove class');
-      $.post("http://localhost:8080/users/favourites/delete",{map_id:map_id},function(data,status) {
-        console.log("deleting record inside post",data);
+      $.post("http://localhost:8080/users/favourites/delete", { map_id }, (data, status) => {
+        console.log("deleting record inside post", data);
       });
     } else if (user_id) {
       icon.addClass('fa-heart-fav');
       console.log('trying to add class');
       $.ajax({
-        url:"http://localhost:8080/users/favourites",
-        method:"POST",
-        data:{map_id:map_id}
+        url: "http://localhost:8080/users/favourites",
+        method: "POST",
+        data: { map_id },
       })
-        .then(function(data) {
-          console.log("adding record",data);
+        .then((data) => {
+          console.log("adding record", data);
         });
-
     }
   });
-
-
 });
-
 
 $(document).ready(() => {
   $('.point_delete').on('click', function(e) {
@@ -36,12 +32,69 @@ $(document).ready(() => {
     // console.log($(this));
     const point_id = $(this).data('point_id');
     const point_card = $(this).closest('.mapList-box');
-    console.log(point_id);
+    // console.log(point_id);
     $.post(`/maps/pointer/${point_id}`)
       .then((res) => {
-        console.log(res);
-        console.log('POINTCARD', point_card);
+        // console.log(res);
+        // console.log('POINTCARD', point_card);
         point_card.remove();
       });
+  });
+
+  let pin_id;
+
+  // eslint-disable-next-line prefer-arrow-callback
+  $('.point_edit').on('click', function(e) {
+    // const editBox = $('.edit-form-box');
+    const boxID = $(this).data('point_id');
+    const infoBox = $(`.point-info_${boxID}`);
+    pin_id = boxID;
+    const editBox = $(`.box_${boxID}`);
+    // const editBox = $(this).closest('.edit-form-box');
+    if (editBox.is(':visible')) {
+      editBox.slideUp('fast');
+      infoBox.slideDown('fast');
+    } else {
+      editBox.slideDown('fast');
+      infoBox.slideUp('fast');
+    }
+    return pin_id;
+  });
+
+  // eslint-disable-next-line prefer-arrow-callback
+  $(`.edit_submit`).on('submit', function(e) {
+    console.log('edited');
+    e.preventDefault();
+    const point_id = $(this).data('point_id');
+    const formData = $(this).serialize();
+
+    const formTitle = $(`#point_title${point_id}`).val();
+    const formDesc = $(`#point_desc${point_id}`).val();
+    const formLat = $(`#point_lat${point_id}`).val();
+    const formLng = $(`#point_lng${point_id}`).val();
+
+    $.post(`/maps/pointer/edit/${point_id}`, formData)
+      .then((res) => {
+        console.log('form info: ', formTitle, formDesc, formLat, formLng);
+        console.log('edited');
+        $(`.mapList-title_${point_id}`).text(formTitle);
+        $(`.mapList-desc_${point_id}`).text(formDesc);
+        $(`.mapList-lat_${point_id}`).text(formLat);
+        $(`.mapList-lng_${point_id}`).text(formLng);
+
+        const boxID = $(this).data('point_id');
+        const infoBox = $(`.point-info_${boxID}`);
+        pin_id = boxID;
+        const editBox = $(`.box_${boxID}`);
+        // const editBox = $(this).closest('.edit-form-box');
+        if (editBox.is(':visible')) {
+          editBox.slideUp('fast');
+          infoBox.slideDown('fast');
+        } else {
+          editBox.slideDown('fast');
+          infoBox.slideUp('fast');
+        }
+      })
+      .catch((err) => { 'error: ', err; });
   });
 });
