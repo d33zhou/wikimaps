@@ -1,11 +1,14 @@
 <header>
+  <%= console.log(user); %>
   <nav class ="navigation_bar">
     <section class="nav-links">
       <a href="http://localhost:8080/" id = "logo">Wiki Maps</a>
       <a href="http://localhost:8080/maps/" id = "maps-link">View maps</a>
-      <a href="http://localhost:8080/users/favourites" id="maps-favourites">My Favourites</a>
-      <a href="http://localhost:8080/users/contributions" id="maps-contributions">My Contributions</a>
-      <a href="http://localhost:8080/maps/create" id="maps-creation">Create Map</a>
+      <a href="http://localhost:8080/users/favourites" id="maps-favourites"
+      data-user-id="<%= user %>">My Favourites</a>
+      <a href="http://localhost:8080/users/contributions" id="maps-contributions"data-user-id="<%= user %>">My Contributions</a>
+      <a href="http://localhost:8080/maps/create" id="maps-creation"
+      data-user-id="<%= user %>">Create Map</a>
     </section>
 
     <section class="nav-buttons">
@@ -31,3 +34,4 @@
     </section>
   </nav>
 </header>
+

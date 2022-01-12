@@ -39,7 +39,9 @@
   <%- include('partials/_header') %>
   <div id="content-wrap">
   <div class="container mt-5">
-
+    <div class="error-message-1">
+      <i class="fa fa-times-circle" >Please login or register!</i>
+    </div>
     <div class="map-container">
       <div id="map">
         <script>
@@ -58,16 +60,24 @@
         <p>The world is at your fingertips with WikiMaps! Create maps with points of interest around your city. Are you
           a
           foodie who knows the best places to eat around town or a movie buff who knows the locations of famous movie
-          scenes?? Then go ahead and make your first WikiMap and share it with your friends,followers and the world!!!!
+          scenes?? Then go ahead and make your first WikiMap and share it with your friends,followers and the world or explore the available maps!!!!
         </p>
         <a id="link" href="http://localhost:8080/maps/"><b>Explore available maps! ></b></a>
       </div>
     </div>
-    <!-- map container -->
+
+      <!-- Error-message -->
+    <div class="error-message">
+    <i class="fa fa-times-circle ">Please login or register!</i>
+  </div>
+
+    <!-- Create an array of favourite maps -->
     <% let favArray = []; %>
     <%for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
       <% favArray.push(favMapsObj[i].map_id); %>
       <% } %>
+
+      <!-- map container -->
     <div class="mapList-container">
       <% for (let i = 0; i < Object.keys(topMapsObj).length; i++) { %>
       <div class="mapList-box">
@@ -79,6 +89,8 @@
         </div>
         <div class="map-buttons">
         <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/map/<%= topMapsObj[i].id %>">View Map</a>
+
+              <!-- Check if the map is a favourite map and render heart colour accordingly -->
               <% if(favArray.includes(topMapsObj[i].id)){ %>
               <button class = "heart-button" data-map-id ="<%= topMapsObj[i].id %>"
                 data-user-id="<%- user %>">
