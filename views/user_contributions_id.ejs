@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Wiki Maps-Profile</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+
+  <!-- Bootstrap CSS-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <!-- App JS -->
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <div id="page-container">
+    <%- include('partials/_header') %>
+    <div id="content-wrap">
+      <div class="container mt-4">
+        <h1>Contributions</h1>
+        <h2>Maps</h2>
+        <div class="mapList-container">
+
+          <% for (let i = 0; i < Object.keys(contributionsMaps).length; i++) { %>
+          <div class="mapList-box">
+            <div class="mapList-info">
+              <img src="/images/Toronto-map.png">
+              <h3 class="mapList-title"><%= contributionsMaps[i].title %></h3>
+              <p><%= contributionsMaps[i].description %></p>
+            </div>
+            <a type="button" class="btn btn-primary btn-sm mapList-btn"
+              href="/maps/map/<%= contributionsMaps[i].id %>">View
+              Map</a>
+          </div>
+          <% } %>
+        </div>
+
+        <h2>Points</h2>
+        <div class="mapList-container">
+
+          <% for (let i = 0; i < Object.keys(contributions).length; i++) { %>
+          <div class="mapList-box">
+            <div class="mapList-info">
+
+              <img class="mapList-img_<%= contributions[i].id %>" src="<%= contributions[i].image %>" alt="">
+              <div class="point-info_<%= contributions[i].id %>">
+
+                <h3 class="mapList-title_<%= contributions[i].id %>"><%= contributions[i].title %></h3>
+                <p class="mapList-desc_<%= contributions[i].id %>"><%= contributions[i].description %></p>
+                <p class="mapList-lat_<%= contributions[i].id %>"><%= contributions[i].latitude %></p>
+                <p class="mapList-lng_<%= contributions[i].id %>"><%= contributions[i].longitude %></p>
+              </div>
+            </div>
+            <div class="edit-form-box box_<%= contributions[i].id %>">
+
+              <form class="edit_submit" action="/maps/pointer/edit/<%= contributions[i].id %>" method="POST"
+                data-point_id="<%= contributions[i].id %>">
+                <input type="text" name="point_title" id="point_title<%= contributions[i].id %>" cols="30" rows="10"
+                  value="<%= contributions[i].title %>">
+                <input type="text" name="point_desc" id="point_desc<%= contributions[i].id %>" cols="30" rows="10"
+                  value="<%= contributions[i].description %>">
+                <input type="text" name="point_img" id="point_img<%= contributions[i].id %>" cols="30" rows="10"
+                  value="<%= contributions[i].image %>">
+                <input type="text" name="point_lat" id="point_lat<%= contributions[i].id %>" cols="30" rows="10"
+                  value="<%= contributions[i].latitude %>">
+                <input type="text" name="point_lng" id="point_lng<%= contributions[i].id %>" cols="30" rows="10"
+                  value="<%= contributions[i].longitude %>">
+                <button type="submit" data-point_id="<%= contributions[i].id %>">Save</button>
+              </form>
+            </div>
+
+            <div class="mapList-btn-box">
+
+              <a type="button" class="btn btn-primary btn-sm mapList-btn"
+                href="/maps/map/<%= contributions[i].map_id %>">View
+                Map</a>
+
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <%- include('partials/_footer') %>
+</body>
+
+</html>
