@@ -70,6 +70,7 @@ $(document).ready(() => {
 
     const formTitle = $(`#point_title${point_id}`).val();
     const formDesc = $(`#point_desc${point_id}`).val();
+    const formImg = $(`#point_img${point_id}`).val();
     const formLat = $(`#point_lat${point_id}`).val();
     const formLng = $(`#point_lng${point_id}`).val();
 
@@ -79,6 +80,7 @@ $(document).ready(() => {
         console.log('edited');
         $(`.mapList-title_${point_id}`).text(formTitle);
         $(`.mapList-desc_${point_id}`).text(formDesc);
+        $(`.mapList-img_${point_id}`).attr('src', formImg);
         $(`.mapList-lat_${point_id}`).text(formLat);
         $(`.mapList-lng_${point_id}`).text(formLng);
 
@@ -96,5 +98,9 @@ $(document).ready(() => {
         }
       })
       .catch((err) => { 'error: ', err; });
+  });
+
+  $('.page-num').on('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 });

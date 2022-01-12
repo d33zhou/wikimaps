@@ -61,7 +61,7 @@
           <div class="mapList-box">
             <div class="mapList-info">
 
-              <img src="<%= contributions[i].image %>" alt="">
+              <img class="mapList-img_<%= contributions[i].id %>" src="<%= contributions[i].image %>" alt="">
               <div class="point-info_<%= contributions[i].id %>">
 
                 <h3 class="mapList-title_<%= contributions[i].id %>"><%= contributions[i].title %></h3>
@@ -78,6 +78,8 @@
                   value="<%= contributions[i].title %>">
                 <input type="text" name="point_desc" id="point_desc<%= contributions[i].id %>" cols="30" rows="10"
                   value="<%= contributions[i].description %>">
+                <input type="text" name="point_img" id="point_img<%= contributions[i].id %>" cols="30" rows="10"
+                  value="<%= contributions[i].image %>">
                 <input type="text" name="point_lat" id="point_lat<%= contributions[i].id %>" cols="30" rows="10"
                   value="<%= contributions[i].latitude %>">
                 <input type="text" name="point_lng" id="point_lng<%= contributions[i].id %>" cols="30" rows="10"

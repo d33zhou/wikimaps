@@ -235,13 +235,15 @@ const mapsRouter = (db) => {
     UPDATE points
     SET title = $1,
         description = $2,
-        latitude = $3,
-        longitude = $4
-    WHERE id = $5;
+        image = $3,
+        latitude = $4,
+        longitude = $5
+    WHERE id = $6;
     `;
     const values = [
       req.body.point_title,
       req.body.point_desc,
+      req.body.point_img,
       req.body.point_lat,
       req.body.point_lng,
       req.params.id];
