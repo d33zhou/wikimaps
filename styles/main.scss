@@ -34,11 +34,14 @@
   display:flex;
   justify-content: space-between;
 }
+.fa-heart:hover{
+  color:red;
+}
 .fa-heart{
   color:lightpink;
   font-size: 1.5em;
 }
-.fa-heart:hover{
+.fa-heart-fav{
   color:red;
 }
 

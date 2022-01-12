@@ -63,18 +63,23 @@
               popupAnchor: [0, -40]
             })
 
-            for (let i = 0; i < Object.keys(mapData).length; i++) {
-              // console.log(mapData.length)
-              marker = new L.marker([mapData[i].latitude, mapData[i].longitude], {
-                  icon: newIcon
-                })
-                .bindPopup(
-                  `
+            // check to see if there is point data before looping
+            if (mapData[0].point_name) {
+
+              for (let i = 0; i < Object.keys(mapData).length; i++) {
+                // console.log(mapData.length)
+                marker = new L.marker([mapData[i].latitude, mapData[i].longitude], {
+                    icon: newIcon
+                  })
+                  .bindPopup(
+                    `
                   <h6>${mapData[i].point_name}</h6>
                 <p>${mapData[i].point_description}</p>
                 `)
-                .addTo(map);
+                  .addTo(map);
+              }
             }
+
 
             // adds popup with lat and long
             const popup = L.popup();
@@ -125,7 +130,6 @@
 
       </div>
     </div>
-
     <%- include('partials/_footer') %>
   </div>
 </body>

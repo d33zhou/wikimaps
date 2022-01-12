@@ -92,11 +92,35 @@ const mapsRouter = (db) => {
       OFFSET $2
       ;`;
 
+    const values = [resultsPerPage, (pageNum - 1) * resultsPerPage];
+
     const queryStringPages = `
       SELECT COUNT(*) FROM maps
     ;`;
 
-    const values = [resultsPerPage, (pageNum - 1) * resultsPerPage];
+    const queryStringFav = `
+    SELECT map_id
+    FROM favourites
+    WHERE user_id = $1;`;
+
+    // db
+    //   .query(queryString1,[req.session.user_id])
+    //   .then(result1 => result1.rows)
+    //   .then((result1) => {
+    //     db.query(queryString)
+    //       .then((result) => {
+    //         res.render('maps', {
+    //           user: req.session.user_id,
+    //           mapList: result.rows,
+    //           favMapsObj:result1,
+    //         });
+    //       })
+    //       .catch((err) => {
+    //         res
+    //           .status(500)
+    //           .json({ error: err.message });
+    //       });
+    //   });
 
     // first query, to obtain total map records (for page navigation)
     db
@@ -104,20 +128,29 @@ const mapsRouter = (db) => {
       .then(records => { return records.rows[0] })
       .then(records => {
 
-        // second query, to obtain filtered map data to display on page
+        // second query, to obtain favourites results
         db
-          .query(queryStringData, values)
-          .then(data => {
+          .query(queryStringFav, [req.session.user_id])
+          .then(favResults => favResults.rows)
+          .then(favResults => {
 
-            // render view with query results from first and second queries
-            res.render('maps', {
-              user: req.session.user_id,
-              mapList: data.rows,
-              page: pageNum,
-              startingRecord: (pageNum - 1) * resultsPerPage,
-              maxPages: Math.ceil(records.count / resultsPerPage),
-              totalRecords: records.count,
-            });
+            // third query, to obtain filtered map data to display on page
+            db
+              .query(queryStringData, values)
+              .then(data => {
+
+                // render view with query results from all queries
+                res.render('maps', {
+                  user: req.session.user_id,
+                  mapList: data.rows,
+                  favMapsObj: favResults,
+                  page: pageNum,
+                  startingRecord: (pageNum - 1) * resultsPerPage,
+                  maxPages: Math.ceil(records.count / resultsPerPage),
+                  totalRecords: records.count,
+                });
+
+              });
 
           });
 
@@ -165,6 +198,29 @@ const mapsRouter = (db) => {
       .then((result) => {
         res
           .redirect(`/maps/map/${req.body.map_id}`);
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.post('/pointer/:id', (req, res) => {
+    // res.send(`response id is ${req.params.id}`);
+    const queryString = `
+    DELETE FROM points
+    WHERE id = $1;
+    `;
+    const values = [req.params.id];
+    db.query(queryString, values)
+    // console.log('abce')
+      .then((result) => {
+        console.log('point has been deleted');
+        res.status(200);
+        res.end();
+        return result;
+        // res.redirect('/users/contributions/');
       })
       .catch((err) => {
         res

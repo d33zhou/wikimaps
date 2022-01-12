@@ -78,11 +78,21 @@ app.get("/", (req, res) => {
       ORDER BY id DESC
   LIMIT 3;`;
 
-  db.query(queryString)
-    .then((result) => res.render("index", {
-      user: req.session.user_id,
-      topMapsObj: result.rows,
-    }))
+  const queryString1 = `
+  SELECT map_id
+  FROM favourites
+  WHERE user_id = $1;`;
+
+  db.query(queryString1,[req.session.user_id])
+    .then(result1 => result1.rows)
+    .then(result1 => {
+      db.query(queryString)
+        .then((result) => res.render("index", {
+          user: req.session.user_id,
+          topMapsObj: result.rows,
+          favMapsObj:result1
+        }));
+    })
     .catch((err) => {
       res
         .status(500)

@@ -40,17 +40,59 @@ const userRouter = (db) => {
       return db
         .query(queryString, [req.session.user_id])
         .then((result) => {
+
           res.render('fav', {
             user: req.session.user_id,
             mapList: result.rows,
           });
+
         })
+
         .catch((err) => {
           res
             .status(500)
             .json({ error: err.message });
         });
     }
+  });
+
+  // POST /users/favourites
+  router.post('/favourites', (req, res) => {
+    const queryString = `
+      INSERT INTO favourites (user_id, map_id)
+            VALUES ($1, $2);`;
+    const values = [req.session.user_id,req.body.map_id];
+
+    db.query(queryString, values)
+      .then((result) => {
+        res
+          .status(200)
+          .send({success:true});
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  //POST  users/favourites/delete
+  router.post('/favourites/delete', (req, res) => {
+    const queryString = `
+    DELETE FROM favourites
+    WHERE user_id =$1 AND map_id=$2;
+    `;
+    const values = [req.session.user_id,req.body.map_id];
+    db.query(queryString, values)
+      .then((result) => {
+        res.status(200).send({success:true});
+        res.end();
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   });
 
   // GET /users/contributions
