@@ -27,7 +27,6 @@ $(document).ready(() => {
 });
 
 $(document).ready(() => {
-
   $('.point_delete').on('click', function(e) {
     // e.preventDefault();
     // console.log($(this));
@@ -42,14 +41,60 @@ $(document).ready(() => {
       });
   });
 
+  let pin_id;
+
   // eslint-disable-next-line prefer-arrow-callback
-  $('.edit_submit').on('submit', function(e) {
+  $('.point_edit').on('click', function(e) {
+    // const editBox = $('.edit-form-box');
+    const boxID = $(this).data('point_id');
+    const infoBox = $(`.point-info_${boxID}`);
+    pin_id = boxID;
+    const editBox = $(`.box_${boxID}`);
+    // const editBox = $(this).closest('.edit-form-box');
+    if (editBox.is(':visible')) {
+      editBox.slideUp('fast');
+      infoBox.slideDown('fast');
+    } else {
+      editBox.slideDown('fast');
+      infoBox.slideUp('fast');
+    }
+    return pin_id;
+  });
+
+  // eslint-disable-next-line prefer-arrow-callback
+  $(`.edit_submit`).on('submit', function(e) {
     console.log('edited');
     e.preventDefault();
+    const point_id = $(this).data('point_id');
+    const formData = $(this).serialize();
 
-    $.post(`/maps/pointer/edit/${point_id}`)
+    const formTitle = $(`#point_title${point_id}`).val();
+    const formDesc = $(`#point_desc${point_id}`).val();
+    const formLat = $(`#point_lat${point_id}`).val();
+    const formLng = $(`#point_lng${point_id}`).val();
+
+    $.post(`/maps/pointer/edit/${point_id}`, formData)
       .then((res) => {
+        console.log('form info: ', formTitle, formDesc, formLat, formLng);
         console.log('edited');
-      });
+        $(`.mapList-title_${point_id}`).text(formTitle);
+        $(`.mapList-desc_${point_id}`).text(formDesc);
+        $(`.mapList-lat_${point_id}`).text(formLat);
+        $(`.mapList-lng_${point_id}`).text(formLng);
+
+        const boxID = $(this).data('point_id');
+        const infoBox = $(`.point-info_${boxID}`);
+        pin_id = boxID;
+        const editBox = $(`.box_${boxID}`);
+        // const editBox = $(this).closest('.edit-form-box');
+        if (editBox.is(':visible')) {
+          editBox.slideUp('fast');
+          infoBox.slideDown('fast');
+        } else {
+          editBox.slideDown('fast');
+          infoBox.slideUp('fast');
+        }
+      })
+      .catch((err) => { 'error: ', err; });
   });
 });

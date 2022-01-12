@@ -247,11 +247,13 @@ const mapsRouter = (db) => {
       req.params.id];
     db.query(queryString, values)
       .then((result) => {
-        res.status(200);
+        // res.status(200).send();
+        console.log("successfully edited point", req.params.id);
         res.end();
-        return result;
       })
       .catch((err) => {
+        console.log(req.body);
+        console.log('error ', err);
         res
           .status(500)
           .json({ error: err.message, value: values });
