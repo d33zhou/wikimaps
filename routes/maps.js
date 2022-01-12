@@ -114,7 +114,9 @@ const mapsRouter = (db) => {
               user: req.session.user_id,
               mapList: data.rows,
               page: pageNum,
+              startingRecord: (pageNum - 1) * resultsPerPage,
               maxPages: Math.ceil(records.count / resultsPerPage),
+              totalRecords: records.count,
             });
 
           });

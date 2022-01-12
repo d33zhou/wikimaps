@@ -40,6 +40,9 @@
 
       <div class="container mt-4">
         <h1>Maps</h1>
+
+        <p class="text-muted page-details">Showing results <%= startingRecord + 1 %> - <%= startingRecord + Object.keys(mapList).length %> of <%= totalRecords %></p>
+
         <div class="mapList-container">
           <!-- Generate map card for each map in the query results-->
           <% for (let i = 0; i < Object.keys(mapList).length; i++) { %>
