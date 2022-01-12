@@ -37,6 +37,11 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 2rem;
+    height: 500px;
+  }
+  &-img{
+    height: 200px;
+    overflow: hidden;
   }
   &-info {
     width: 100%;
@@ -68,6 +73,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    align-items:flex-end;
   }
 }
 
@@ -86,4 +92,24 @@ body {
 .edit-form-box {
   display: none;
   margin-bottom: 20px;
+}
+
+.add-points-and-view-points{
+  display:flex;
+}
+
+.map-form-add-point{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items:flex-start;
+}
+
+.mapList-container-points{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 40px;
+  justify-content: flex-end;
+  width: 80%;
 }

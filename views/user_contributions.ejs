@@ -61,7 +61,8 @@
           <div class="mapList-box">
             <div class="mapList-info">
 
-              <img class="mapList-img_<%= contributions[i].id %>" src="<%= contributions[i].image %>" alt="">
+              <img class="mapList-img mapList-img_<%= contributions[i].id %>" src="<%= contributions[i].image %>"
+                alt="">
               <div class="point-info_<%= contributions[i].id %>">
 
                 <h3 class="mapList-title_<%= contributions[i].id %>"><%= contributions[i].title %></h3>
@@ -92,7 +93,7 @@
             <div class="mapList-btn-box">
 
               <a type="button" class="btn btn-primary btn-sm mapList-btn"
-                href="/maps/<%= contributions[i].map_id %>">View
+                href="/maps/map/<%= contributions[i].map_id %>">View
                 Map</a>
 
               <button class="btn btn-sm btn-warning mapList-btn point_edit"

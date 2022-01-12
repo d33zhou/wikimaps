@@ -132,21 +132,36 @@
             <h2>About Map</h2>
             <h6>Map By: <%= mapData[0].created_by %> </h6>
             <p><%= mapData[0].description %></p>
-          </div>
-          <div class="map-form">
-            <h3>Add Point</h3>
-            <form action="/maps/pointer" method="post" class="map-form">
-              <input type="text" name="point_title" id="point_title" placeholder="Title">
-              <input type="text" name="point_description" id="point_description" placeholder="Description">
-              <input type="url" name="img_url" id="img_url" placeholder="Image URL">
-              <input type="text" class="form_lat" name="form_lat" id="form_lat" placeholder="Latitude">
-              <input type="text" class="form_lng" name="form_lng" id="form_lng" placeholder="Longitude">
-              <input type="text" name="map_id" id="map_id_hide" value="<%= mapData[0].id %>">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
-        </div>
+            <div class="add-points-and-view-points">
+            <div class="map-form-add-point">
+              <h3>Add Point</h3>
+              <form action="/maps/pointer" method="post" class="map-form">
+                <input type="text" name="point_title" id="point_title" placeholder="Title">
+                <input type="text" name="point_description" id="point_description" placeholder="Description">
+                <input type="url" name="img_url" id="img_url" placeholder="Image URL">
+                <input type="text" class="form_lat" name="form_lat" id="form_lat" placeholder="Latitude">
+                <input type="text" class="form_lng" name="form_lng" id="form_lng" placeholder="Longitude">
+                <input type="text" name="map_id" id="map_id_hide" value="<%= mapData[0].id %>">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
 
+            </div>
+            <div class="mapList-container-points">
+              <% for (let i = 0; i < Object.keys(mapData).length; i++) { %>
+              <div class="mapList-box">
+                <div class="mapList-info">
+
+                  <img src="<%= mapData[i].point_img %>" alt="" class="points-image">
+                  <h3 class="mapList-title"><%= mapData[i].point_name %></h3>
+                  <p><%= mapData[i].point_description %></p>
+                  <p><%= mapData[i].latitude %></p>
+                  <p><%= mapData[i].longitude %></p>
+                </div>
+          </div>
+          <% } %>
+        </div>
+        </div>
+      </div>
       </div>
     </div>
     <%- include('partials/_footer') %>

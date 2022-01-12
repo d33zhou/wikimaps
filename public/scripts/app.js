@@ -99,4 +99,8 @@ $(document).ready(() => {
       })
       .catch((err) => { 'error: ', err; });
   });
+
+  $('.page-num').on('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 });
