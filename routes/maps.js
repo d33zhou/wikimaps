@@ -180,10 +180,17 @@ const mapsRouter = (db) => {
   // POST /maps/create
   router.post('/create', (req, res) => {
     const queryString = `
-      INSERT INTO maps (creator_id, title, description)
-      VALUES ($1, $2, $3)
+      INSERT INTO maps (creator_id, title, description, latitude, longitude, location)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id;`;
-    const values = [req.session.user_id, req.body.title, req.body.description];
+    const values = [
+      req.session.user_id,
+      req.body.title,
+      req.body.description,
+      req.body.latitude,
+      req.body.longitude,
+      req.body.location
+    ];
 
     db.query(queryString, values)
       .then((result) => {
