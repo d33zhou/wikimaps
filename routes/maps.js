@@ -33,7 +33,14 @@ const mapsRouter = (db) => {
   // GET /maps/map/:id
   router.get('/map/:id', (req, res) => {
     const queryString = `
-      SELECT maps.*,
+      SELECT
+        maps.id,
+        maps.creator_id,
+        maps.title,
+        maps.description,
+        maps.latitude AS map_lat,
+        maps.longitude AS map_lng,
+        maps.location AS map_loc,
         users.name AS created_by,
         points.title AS point_name,
         points.description AS point_description,
@@ -56,6 +63,7 @@ const mapsRouter = (db) => {
       .then((result1) => {
         db.query(queryString, [req.params.id])
           .then((result) => {
+            console.log(result.rows)
             res.render('map_id', {
               user: req.session.user_id,
               mapData: result.rows,
