@@ -72,6 +72,20 @@ h1, h2, h3 {
   }
   &-btn {
     max-width: fit-content;
+    background-image: linear-gradient(to bottom right, #0d6efd 0%, #124797 100%);
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    color: #fff;
+    transition: all .2s;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #fff;
+      background-image: linear-gradient(to top left, #0d6efd 0%, #124797 100%);
+    }
   }
 }
 
