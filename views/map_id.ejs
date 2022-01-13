@@ -152,6 +152,7 @@
           </div>
         </div>
         <div class="mapList-container">
+          <% if (mapData[0].point_name) { %>
           <% for (let i = 0; i < Object.keys(mapData).length; i++) { %>
           <div class="mapList-box">
             <div class="mapList-info">
@@ -164,6 +165,8 @@
             </div>
           </div>
           <% } %>
+          <% } %>
+
         </div>
       </div>
       <%- include('partials/_footer') %>
