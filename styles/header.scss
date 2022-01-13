@@ -45,6 +45,7 @@ $cream:#E7EFF6;
 
   .nav-buttons {
     padding-right: 3em;
+
   }
 
   #register-login {
@@ -77,3 +78,22 @@ footer{
     margin-bottom: 0;
   }
 }
+
+.search-box{
+  width:250px;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.fa-search{
+  color:$cream;
+}
+
+// .search-result-container{
+//   max-height:250px;
+//   overflow-y:auto;
+//   transition: visibility 0.1s, opacity 0.1s;
+// }
+
+// .search-result-container--visible{
+//   visibility:visible;
+//   opacity:1;
+// }

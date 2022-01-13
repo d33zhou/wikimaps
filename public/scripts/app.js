@@ -24,6 +24,13 @@ $(document).ready(() => {
         });
     }
   });
+  $('.search-box').on('keyup',function(event) {
+    const input = $(this).val();
+    console.log(input);
+    $.post('/maps/search',{input},(data) => {
+      console.log('posted',data);
+    });
+  });
 });
 
 $(document).ready(() => {
@@ -97,7 +104,9 @@ $(document).ready(() => {
           infoBox.slideUp('fast');
         }
       })
-      .catch((err) => { 'error: ', err; });
+      .catch((err) => {
+        'error: ', err;
+      });
   });
 
   $('.page-num').on('click', () => {
