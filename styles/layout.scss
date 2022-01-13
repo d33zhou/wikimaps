@@ -37,6 +37,11 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 2rem;
+    min-height: 500px;
+  }
+  &-img{
+    height: 200px;
+    overflow: hidden;
   }
   &-info {
     width: 100%;
