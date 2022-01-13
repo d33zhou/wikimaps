@@ -1,4 +1,15 @@
 // Client facing scripts here
+const createSearchResult = function(searchResult) {
+  const searchResultElement = `<a href="http://localhost:8080/maps/map/${searchResult.id}" class="search-result">${searchResult.title}</a>`;
+  return searchResultElement;
+};
+
+const renderSearchResults = function(target,searchResultArray) {
+  for (let i = 0; i < Object.keys(searchResultArray).length; i++) {
+    let searchResultElement = createSearchResult(searchResultArray[i]);
+    target.prepend(searchResultElement);
+  }
+};
 $(document).ready(() => {
   $('.heart-button').on('click', function() {
     const map_id = $(this).attr('data-map-id');
@@ -24,17 +35,16 @@ $(document).ready(() => {
         });
     }
   });
-  $('#search-result-container').hide();
+  const $searchResultContainer = $('#search-result-container');
+  $searchResultContainer.hide();
   $('.search-box').on('keyup',function(event) {
+    $searchResultContainer.empty();
     const input = $(this).val();
     if (input !== "") {
-      $('#search-result-container').show();
+      $searchResultContainer.show();
       console.log(input);
       $.post('/maps/search',{input},(data) => {
-        for (let i = 0; i < Object.keys(data).length; i++) {
-          console.log(data);
-          $('#search-result-container').append(`<a href="http://localhost:8080/maps/map/${data[i].id}" class="search-result">${data[i].title}</a>`);
-        }
+        renderSearchResults($searchResultContainer,data);
       });
     } else if (input === "") {
       $('#search-result-container').hide();
