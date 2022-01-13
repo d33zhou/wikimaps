@@ -14,6 +14,42 @@
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
           }).addTo(map);
 
+          const newIcon = L.icon({
+            iconUrl: '/images/red-marker-icon.png',
+
+            iconSize: [48, 48],
+            iconAnchor: [24, 50],
+            popupAnchor: [0, -40]
+          })
+
+          const locations = [{
+              db_marker_id: 1,
+              user_id: 'CHRIS\'S PIZZERIA',
+              lat: 43.65539102491039,
+              lon: -79.43372726440431,
+            },
+            {
+              db_marker_id: 2,
+              user_id: 'ZARA\'S FASHIONS',
+              lat: 43.685191107385755,
+              lon: -79.41587448120119,
+            },
+            {
+              db_marker_id: 3,
+              user_id: 'DAVID\'S TEA',
+              lat: 43.66905123271143,
+              lon: -79.32832717895509,
+            },
+          ];
+
+          for (let i = 0; i < locations.length; i++) {
+            console.log(locations[i].lat);
+            marker = new
+            L.marker([locations[i].lat, locations[i].lon], {
+              icon: newIcon
+            }).bindPopup(`${locations[i].user_id}`).addTo(map);
+          }
+
         </script>
       </div>
       <div class="intro-text">
@@ -29,6 +65,7 @@
       </div>
     </div>
     <!-- map container -->
+    <h2>Recent Maps</h2>
     <% let favArray = []; %>
     <%for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
     <% favArray.push(favMapsObj[i].map_id); %>
