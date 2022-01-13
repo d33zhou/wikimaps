@@ -44,11 +44,11 @@
           <h1>Create Map</h1>
 
           <form method="POST" action="/maps/create">
-            <input type="text" id="title" name="title" placeholder="Title">
+            <input type="text" id="title" name="title" placeholder="Title" autofocus required>
             <input type="text" id="location" name="location" placeholder="Location">
             <div id="loc-coords">
-              <input class="form-control" type="text" id="latitude" name="latitude" placeholder="Latitude" disabled readonly>
-              <input class="form-control" type="text" id="longitude" name="longitude" placeholder="Longitude" disabled readonly>
+              <input class="form-control" type="text" id="latitude" name="latitude" value="43.657572963908336" required disabled readonly>
+              <input class="form-control" type="text" id="longitude" name="longitude" value="-79.41145185759068" required disabled readonly>
             </div>
             <textarea id="description" name="description" rows="5" placeholder="Description"></textarea>
             <button type="submit" class="btn btn-primary">Create Map</button>
