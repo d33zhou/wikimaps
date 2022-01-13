@@ -6,7 +6,7 @@ $cream:#E7EFF6;
   color:$dark_blue;
 }
 @mixin navigation {
-  background-color:$dark_blue;
+  background-image: linear-gradient(to bottom right, #0d6efd 0%, #124797 100%);;
   font: $cream;
 }
 @mixin links-theme{
