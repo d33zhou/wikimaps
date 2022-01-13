@@ -39,6 +39,7 @@ $cream:#E7EFF6;
     display: flex;
     flex-direction: row;
     width:1000px;
+    align-items: center;
     // justify-content: space-around;
     // padding-left: 3em;
     // gap: 4em;
@@ -107,7 +108,12 @@ footer{
 }
 
 #search-result-container{
-  padding-left: 1625px;
+  // padding-left: 1625px;
+  position: absolute;
+  right: 0;
+  width: 200px;
+  margin-top: -50px;
+  text-align: right;
   max-height:250px;
   overflow-y:auto;
   transition: visibility 0.1s, opacity 0.1s;

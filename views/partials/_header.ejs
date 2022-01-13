@@ -1,42 +1,90 @@
-<header>
-  <nav class ="navigation_bar">
-    <section class="nav-links">
-      <a href="http://localhost:8080/" id = "logo">WikiMaps</a>
+<!DOCTYPE html>
+<html lang="en">
 
-      <a href="http://localhost:8080/maps/" id = "maps-link">View maps</a>
-      <a href="http://localhost:8080/users/favourites" id="maps-favourites">My Favourites</a>
-      <a href="http://localhost:8080/users/contributions" id="maps-contributions">My Contributions</a>
-      <a href="http://localhost:8080/maps/create" id="maps-creation">Create Map</a>
-    </section>
+<head>
+  <title>WikiMaps - Homepage</title>
 
-    <section class="nav-buttons">
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
 
-      <% if (!user) { %>
+  <!-- Bootstrap CSS-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-        <div id="register-login">
-          <button type="button" class="btn btn-light">Register</button>
+  <!-- App CSS -->
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/map_create.css" type="text/css" />
 
-          <form method="GET" action="/users/login/1">
-            <button type="submit" class="btn btn-light">Log In</button>
-          </form>
-        </div>
 
-      <% } else { %>
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Rufina:wght@700&display=swap"
+    rel="stylesheet">
 
-        <form method="GET" action="/users/logout">
-          <button type="submit" class="btn btn-light">Log Out</button>
-        </form>
 
-      <% } %>
-      <div  id="search-maps" class="search">
-        <div class="search-box-container">
-          <input type = "text" placeholder="Search Maps" class="search-box">
-          <i class="fas fa-search search-icon"></i>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <!-- App JS -->
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <div id="page-container">
+    <header>
+      <nav class="navigation_bar">
+        <section class="nav-links">
+          <a href="http://localhost:8080/" id="logo">WikiMaps</a>
+
+          <a href="http://localhost:8080/maps/" id="maps-link">View maps</a>
+          <a href="http://localhost:8080/users/favourites" id="maps-favourites">My Favourites</a>
+          <a href="http://localhost:8080/users/contributions" id="maps-contributions">My Contributions</a>
+          <a href="http://localhost:8080/maps/create" id="maps-creation">Create Map</a>
+        </section>
+
+        <section class="nav-buttons">
+          <div id="search-maps" class="search">
+            <div class="search-box-container">
+              <input type="text" placeholder="Search Maps" class="search-box">
+              <i class="fas fa-search search-icon"></i>
+            </div>
+
           </div>
 
-        </div>
+          <% if (!user) { %>
 
-    </section>
+          <div id="register-login">
+            <button type="button" class="btn btn-light">Register</button>
 
-  </nav>
-</header>
+            <form method="GET" action="/users/login/1">
+              <button type="submit" class="btn btn-light">Log In</button>
+            </form>
+          </div>
+
+          <% } else { %>
+
+          <form method="GET" action="/users/logout">
+            <button type="submit" class="btn btn-light">Log Out</button>
+          </form>
+
+          <% } %>
+
+
+        </section>
+
+      </nav>
+    </header>
