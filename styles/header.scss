@@ -92,7 +92,6 @@ footer{
   }
 }
 
-
 .search-box{
   width:250px;
   transition: background 0.15s, box-shadow 0.15s;
@@ -107,13 +106,10 @@ footer{
 }
 
 #search-result-container{
-  padding-left: 200px;
-  width: 24%;
+  padding-left: 1625px;
   max-height:250px;
   overflow-y:auto;
   transition: visibility 0.1s, opacity 0.1s;
-  // visibility:hidden;
-  // opacity:0;
 }
 
 .search-result-container--visible{

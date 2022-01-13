@@ -41,7 +41,8 @@ $(document).ready(() => {
     $searchResultContainer.empty();
     const input = $(this).val();
     if (input !== "") {
-      $searchResultContainer.show();
+      $searchResultContainer.empty();
+      $searchResultContainer.slideDown();
       console.log(input);
       $.post('/maps/search',{input},(data) => {
         renderSearchResults($searchResultContainer,data);

@@ -21,6 +21,9 @@
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
 
+    <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -36,6 +39,10 @@
   <div id="page-container">
     <%- include('partials/_header') %>
     <div id="content-wrap">
+      <div id="search-result-container">
+        <!-- insert search results here -->
+      </div>
+
       <div class="container mt-4">
         <h1>My Favourites</h1>
         <div class="mapList-container">
