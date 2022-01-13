@@ -21,8 +21,8 @@
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
 
-<!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -36,67 +36,70 @@
 
 <body>
   <div id="page-container">
-  <%- include('partials/_header') %>
-  <div id="content-wrap">
-  <div class="container mt-5">
+    <%- include('partials/_header') %>
+    <div id="content-wrap">
+      <div class="container mt-5">
 
-    <div class="map-container">
-      <div id="map">
-        <script>
-          const map = L.map('map').setView([43.657572963908336, -79.41145185759068], 12);
+        <div class="map-container">
+          <div id="map">
+            <script>
+              const map = L.map('map').setView([43.657572963908336, -79.41145185759068], 12);
 
-          // google map tile
-          L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-            maxZoom: 18,
-            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-          }).addTo(map);
+              // google map tile
+              L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                maxZoom: 18,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+              }).addTo(map);
 
-        </script>
-      </div>
-      <div class="intro-text">
-        <h2>Explore the World!</h2>
-        <p>The world is at your fingertips with WikiMaps! Create maps with points of interest around your city. Are you
-          a
-          foodie who knows the best places to eat around town or a movie buff who knows the locations of famous movie
-          scenes?? Then go ahead and make your first WikiMap and share it with your friends,followers and the world!!!!
-        </p>
-        <a id="link" href="http://localhost:8080/maps/"><b>Explore available maps! ></b></a>
-      </div>
-    </div>
-    <!-- map container -->
-    <% let favArray = []; %>
-    <%for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
-      <% favArray.push(favMapsObj[i].map_id); %>
-      <% } %>
-    <div class="mapList-container">
-      <% for (let i = 0; i < Object.keys(topMapsObj).length; i++) { %>
-      <div class="mapList-box">
-        <div class="mapList-info">
-          <img src="/images/Toronto-map.png">
-          <h3 class="mapList-title"><%= topMapsObj[i].title %></h3>
-          <p><%= topMapsObj[i].description %></p>
-          <p>Created by: <a href="/users/contributions/<%= topMapsObj[i].creator_id %>"><%= topMapsObj[i].created_by %></a></p>
+            </script>
+          </div>
+          <div class="intro-text">
+            <h2>Explore the World!</h2>
+            <p>The world is at your fingertips with WikiMaps! Create maps with points of interest around your city. Are
+              you
+              a
+              foodie who knows the best places to eat around town or a movie buff who knows the locations of famous
+              movie
+              scenes?? Then go ahead and make your first WikiMap and share it with your friends,followers and the
+              world!!!!
+            </p>
+            <a id="link" href="http://localhost:8080/maps/"><b>Explore available maps! ></b></a>
+          </div>
         </div>
-        <div class="map-buttons">
-        <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/map/<%= topMapsObj[i].id %>">View Map</a>
+        <!-- map container -->
+        <% let favArray = []; %>
+        <%for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
+        <% favArray.push(favMapsObj[i].map_id); %>
+        <% } %>
+        <div class="mapList-container">
+          <% for (let i = 0; i < Object.keys(topMapsObj).length; i++) { %>
+          <div class="mapList-box">
+            <div class="mapList-info">
+              <img src="/images/Toronto-map.png">
+              <h3 class="mapList-title"><%= topMapsObj[i].title %></h3>
+              <p><%= topMapsObj[i].description %></p>
+              <p>Created by: <a href="/users/contributions/<%= topMapsObj[i].creator_id %>"
+                  class="created_by_link"><%= topMapsObj[i].created_by %></a></p>
+            </div>
+            <div class="map-buttons">
+              <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/map/<%= topMapsObj[i].id %>">View
+                Map</a>
               <% if(favArray.includes(topMapsObj[i].id)){ %>
-              <button class = "heart-button" data-map-id ="<%= topMapsObj[i].id %>"
-                data-user-id="<%- user %>">
-              <i class="fas fa-heart fa-heart-fav"></i>
+              <button class="heart-button" data-map-id="<%= topMapsObj[i].id %>" data-user-id="<%- user %>">
+                <i class="fas fa-heart fa-heart-fav"></i>
               </button>
               <% } else {%>
-              <button class = "heart-button" data-map-id ="<%= topMapsObj[i].id %>"
-                data-user-id="<%- user %>">
+              <button class="heart-button" data-map-id="<%= topMapsObj[i].id %>" data-user-id="<%- user %>">
                 <i class="fas fa-heart"></i>
-                </button>
-                <% } %>
+              </button>
+              <% } %>
+            </div>
+          </div>
+          <% } %>
         </div>
       </div>
-      <% } %>
     </div>
-  </div>
-  </div>
-  <%- include('partials/_footer') %>
+    <%- include('partials/_footer') %>
   </div>
 </body>
 
