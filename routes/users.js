@@ -144,8 +144,9 @@ const userRouter = (db) => {
       ORDER BY id DESC;
       `;
       const queryString1 = `
-          SELECT *
+          SELECT maps.*, users.name
           FROM maps
+          JOIN users ON maps.creator_id = users.id
           WHERE creator_id = $1
           ORDER BY id DESC;
         `;
