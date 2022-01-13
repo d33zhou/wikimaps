@@ -1,5 +1,6 @@
 $dark_blue:#146FF3;
 $cream:#E7EFF6;
+$cream-dark:#d2d9df;
 
 @mixin page{
   background-color: $cream;
@@ -111,11 +112,12 @@ footer{
   // padding-left: 1625px;
   position: absolute;
   right: 0;
-  width: 200px;
-  margin-top: -50px;
+  width: 250px;
   text-align: right;
+  margin-right: 20px;
   max-height:250px;
   overflow-y:auto;
+  background:$cream;
   transition: visibility 0.1s, opacity 0.1s;
 }
 
@@ -132,9 +134,13 @@ footer{
   cursor:pointer;
 }
 .search-result:hover{
-  background:$cream;
+  background:$cream-dark;
 }
 
 .search-result:not(:last-of-type){
   border-bottom: 1px solid $cream;
+}
+
+.searchbox {
+  position: relative;
 }
