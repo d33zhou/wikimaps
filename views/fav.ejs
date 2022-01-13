@@ -44,7 +44,9 @@
           <div class="mapList-box">
             <div class="mapList-info">
 
-              <img src="/images/Toronto-map.png">
+              <!-- generate map view based on map coordinates -->
+              <img src="/maps/map/lat/<%=mapList[i].latitude%>/lon/<%=mapList[i].longitude%>">
+
               <h3 class="mapList-title"><%= mapList[i].title %></h3>
               <p><%= mapList[i].description %></p>
               <p>Created by: <a href="/users/contributions/<%= mapList[i].creator_id %>"

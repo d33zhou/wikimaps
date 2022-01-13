@@ -43,7 +43,10 @@
           <% for (let i = 0; i < Object.keys(contributionsMaps).length; i++) { %>
           <div class="mapList-box">
             <div class="mapList-info">
-              <img src="/images/Toronto-map.png">
+
+              <!-- generate map view based on map coordinates -->
+              <img src="/maps/map/lat/<%=contributionsMaps[i].latitude%>/lon/<%=contributionsMaps[i].longitude%>">
+
               <h3 class="mapList-title"><%= contributionsMaps[i].title %></h3>
               <p><%= contributionsMaps[i].description %></p>
             </div>
