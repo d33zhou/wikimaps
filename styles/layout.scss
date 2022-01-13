@@ -1,4 +1,5 @@
 // See: https://sass-lang.com/
+@use 'header';
 
 body,
 html {
@@ -9,11 +10,26 @@ html {
 body {
   display: flex;
   flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
 
 }
 
+.container {
+  position: relative;
+}
+
+// TYPOGRAPHY
+#logo {
+  font-family: 'Rufina', serif;
+  font-size: 24px;
+}
+
+
 h1, h2, h3 {
   margin-bottom: 40px;
+  font-weight: 600;
+  color: header.$dark_blue;
 }
 
 // maps

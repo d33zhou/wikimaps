@@ -63,7 +63,6 @@ const mapsRouter = (db) => {
       .then((result1) => {
         db.query(queryString, [req.params.id])
           .then((result) => {
-            console.log(result.rows)
             res.render('map_id', {
               user: req.session.user_id,
               mapData: result.rows,
@@ -92,8 +91,7 @@ const mapsRouter = (db) => {
   });
 
   // GET /map/<id>/lat/<latitude>/lng/<longitude> --> create jpeg image at given coords
-  router.get('/map/:id/lat/:lat/lng/:lng', async (req, res) => {
-
+  router.get('/map/:id/lat/:lat/lng/:lng', async(req, res) => {
     const map = new StaticMaps({
       width: 600,
       height: 400,
@@ -112,14 +110,6 @@ const mapsRouter = (db) => {
     await map.image.save(`public/images/maps/map-${mapID}.png`);
 
     res.redirect(`/maps/map/${mapID}`);
-
-    // ---to view the image on the page---
-    // map.image.buffer('image/jpeg', { quality: 75 })
-    //   .then(buffer => {
-    //     // res.write(buffer, 'binary');
-    //     // res.end(null, 'binary');
-    //   });
-
   });
 
   // GET /maps/ --> redirect to GET /maps/1 (page 1 search results default)
@@ -192,7 +182,6 @@ const mapsRouter = (db) => {
 
   // POST /maps/create
   router.post('/create', (req, res) => {
-
     const queryString = `
       INSERT INTO maps (creator_id, title, description, latitude, longitude, location)
       VALUES ($1, $2, $3, $4, $5, $6)
@@ -203,7 +192,7 @@ const mapsRouter = (db) => {
       req.body.description,
       req.body.map_lat,
       req.body.map_lng,
-      req.body.location
+      req.body.location,
     ];
 
     db.query(queryString, values)
@@ -225,7 +214,14 @@ const mapsRouter = (db) => {
     INSERT INTO points (map_id, creator_id, title, description, image, latitude, longitude)
     VALUES ($1, $2, $3, $4,$5, $6, $7)
     `;
-    const values = [req.body.map_id, req.session.user_id, req.body.point_title, req.body.point_description, req.body.img_url, req.body.form_lat, req.body.form_lng];
+    const values = [
+      req.body.map_id,
+      req.session.user_id,
+      req.body.point_title,
+      req.body.point_description,
+      req.body.img_url,
+      req.body.form_lat,
+      req.body.form_lng];
     db.query(queryString, values)
       .then((result) => {
         res
@@ -246,7 +242,6 @@ const mapsRouter = (db) => {
     `;
     const values = [req.params.id];
     db.query(queryString, values)
-    // console.log('abce')
       .then((result) => {
         console.log('point has been deleted');
         res.status(200);
@@ -294,23 +289,21 @@ const mapsRouter = (db) => {
   });
 
   // POST /maps/search
-  router.post('/search',(req,res) => {
-    const queryString =
-    `SELECT title,id
+  router.post('/search', (req, res) => {
+    const queryString = `SELECT title,id
     FROM maps
     WHERE title LIKE '%'||$1||'%'
     LIMIT 3;
     `;
     console.log(req.body.input);
-    db.query(queryString,[req.body.input])
-      .then(result => {
-        console.log('queried the db',result.rows);
+    db.query(queryString, [req.body.input])
+      .then((result) => {
+        console.log('queried the db', result.rows);
         res.send(result.rows);
       })
-      .catch(err => {
-        console.log('Error',err.message);
+      .catch((err) => {
+        console.log('Error', err.message);
       });
-
   });
 
   return router;

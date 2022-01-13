@@ -1,124 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/_header') %>
+<div id="content-wrap">
 
-<head>
-  <title>WikiMaps - Maps</title>
+  <div class="container mt-4">
+    <h1>Maps</h1>
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <p class="text-muted page-details">Showing results <%= startingRecord + 1 %> -
+      <%= startingRecord + Object.keys(mapList).length %> of <%= totalRecords %></p>
 
-  <!-- Bootstrap CSS-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <!-- App CSS -->
-  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/page_nav.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+    <% let favArray = []; %>
+    <% for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
+    <% favArray.push(favMapsObj[i].map_id); %>
+    <% } %>
 
+    <div class="mapList-container">
+      <!-- Generate map card for each map in the query results-->
+      <% for (let i = 0; i < Object.keys(mapList).length; i++) { %>
+      <div class="mapList-box">
+        <div class="mapList-info">
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin="" />
+          <!-- pull map view from saved images folder (map image generated on creation) -->
+          <img src="/images/maps/map-<%=mapList[i].id%>.png" alt="Map Image">
 
-  <!-- Font Awesome CSS -->
-  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
-
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-
-
-  <!-- App JS -->
-  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
-</head>
-
-<body>
-  <div id="page-container">
-
-    <%- include('partials/_header') %>
-    <div id="content-wrap">
-      <div id="search-result-container">
-        <!-- insert search results here -->
+          <h3 class="mapList-title"><%= mapList[i].title %></h3>
+          <p><%= mapList[i].description %></p>
+          <p>Created by: <a href="/users/contributions/<%= mapList[i].creator_id %>"
+              class="created_by_link"><%= mapList[i].created_by %></a></p>
+        </div>
+        <div class="map-buttons">
+          <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/map/<%= mapList[i].id %>">View
+            Map</a>
+          <% if(favArray.includes(mapList[i].id)){ %>
+          <button class="heart-button" data-map-id="<%= mapList[i].id %>" data-user-id="<%- user %>">
+            <i class="fas fa-heart fa-heart-fav"></i>
+          </button>
+          <% } else {%>
+          <button class="heart-button" data-map-id="<%= mapList[i].id %>" data-user-id="<%- user %>">
+            <i class="fas fa-heart"></i>
+          </button>
+          <% } %>
+        </div>
       </div>
-      <div class="container mt-4">
-        <h1>Maps</h1>
+      <% } %>
 
-        <p class="text-muted page-details">Showing results <%= startingRecord + 1 %> -
-          <%= startingRecord + Object.keys(mapList).length %> of <%= totalRecords %></p>
+      <!-- Page selector for search results -->
+      <div id="page-selector">
 
-        <% let favArray = []; %>
-        <% for (let i = 0; i < Object.keys(favMapsObj).length; i++) { %>
-        <% favArray.push(favMapsObj[i].map_id); %>
+        <!-- Show previous button if not on first page -->
+        <% if (page > 1) { %>
+        <a href="/maps/1" class="page-arrow"><strong>&lt&lt</strong></a>
+        <a href="/maps/<%= (page - 1) %>" class="page-arrow"><strong>&lt</strong></a>
         <% } %>
 
-        <div class="mapList-container">
-          <!-- Generate map card for each map in the query results-->
-          <% for (let i = 0; i < Object.keys(mapList).length; i++) { %>
-          <div class="mapList-box">
-            <div class="mapList-info">
+        <!-- Create a button for each page of results -->
+        <% for (let pageNum = 1; pageNum <= maxPages; pageNum++) { %>
 
-              <!-- pull map view from saved images folder (map image generated on creation) -->
-              <img src="/images/maps/map-<%=mapList[i].id%>.png" alt="Map Image">
+        <% if (pageNum === page) { %>
+        <a href="#" class="page-current"><%= pageNum %></a>
+        <% } else { %>
+        <a href="/maps/<%= pageNum %>" class="page-num"><%= pageNum %></a>
+        <% } %>
 
-              <h3 class="mapList-title"><%= mapList[i].title %></h3>
-              <p><%= mapList[i].description %></p>
-              <p>Created by: <a href="/users/contributions/<%= mapList[i].creator_id %>"
-                  class="created_by_link"><%= mapList[i].created_by %></a></p>
-            </div>
-            <div class="map-buttons">
-              <a type="button" class="btn btn-primary btn-sm mapList-btn" href="/maps/map/<%= mapList[i].id %>">View
-                Map</a>
-              <% if(favArray.includes(mapList[i].id)){ %>
-              <button class="heart-button" data-map-id="<%= mapList[i].id %>" data-user-id="<%- user %>">
-                <i class="fas fa-heart fa-heart-fav"></i>
-              </button>
-              <% } else {%>
-              <button class="heart-button" data-map-id="<%= mapList[i].id %>" data-user-id="<%- user %>">
-                <i class="fas fa-heart"></i>
-              </button>
-              <% } %>
-            </div>
-          </div>
-          <% } %>
+        <% } %>
 
-          <!-- Page selector for search results -->
-          <div id="page-selector">
-
-            <!-- Show previous button if not on first page -->
-            <% if (page > 1) { %>
-            <a href="/maps/1" class="page-arrow"><strong>&lt&lt</strong></a>
-            <a href="/maps/<%= (page - 1) %>" class="page-arrow"><strong>&lt</strong></a>
-            <% } %>
-
-            <!-- Create a button for each page of results -->
-            <% for (let pageNum = 1; pageNum <= maxPages; pageNum++) { %>
-
-            <% if (pageNum === page) { %>
-            <a href="#" class="page-current"><%= pageNum %></a>
-            <% } else { %>
-            <a href="/maps/<%= pageNum %>" class="page-num"><%= pageNum %></a>
-            <% } %>
-
-            <% } %>
-
-            <!-- Show next button if not on last page -->
-            <% if (page < maxPages) { %>
-            <a href="/maps/<%= (page + 1) %>" class="page-arrow"><strong>&gt</strong></a>
-            <a href="/maps/<%= maxPages %>" class="page-arrow"><strong>&gt&gt</strong></a>
-            <% } %>
-
-          </div>
-
-        </div>
+        <!-- Show next button if not on last page -->
+        <% if (page < maxPages) { %>
+        <a href="/maps/<%= (page + 1) %>" class="page-arrow"><strong>&gt</strong></a>
+        <a href="/maps/<%= maxPages %>" class="page-arrow"><strong>&gt&gt</strong></a>
+        <% } %>
 
       </div>
+
     </div>
-    <%- include('partials/_footer') %>
+
   </div>
+</div>
+<%- include('partials/_footer') %>
+</div>
 </body>
 
 </html>
