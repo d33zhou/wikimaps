@@ -14,6 +14,7 @@ $(document).ready(() => {
   $('.heart-button').on('click', function() {
     const map_id = $(this).attr('data-map-id');
     const user_id = $(this).attr('data-user-id');
+    const point_card = $(this).closest('.mapList-box');
     console.log(map_id);
     const icon = $(this).find('i');
     if (icon.hasClass('fa-heart-fav') && user_id) {
@@ -21,6 +22,7 @@ $(document).ready(() => {
       console.log('trying to remove class');
       $.post("http://localhost:8080/users/favourites/delete", { map_id }, (data, status) => {
         console.log("deleting record inside post", data);
+        point_card.remove();
       });
     } else if (user_id) {
       icon.addClass('fa-heart-fav');
