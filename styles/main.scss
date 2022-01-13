@@ -18,6 +18,11 @@
   #link{
     @include header.links-theme;
     color:header.$dark_blue;
+
+    &:hover {
+      transform: 1.05;
+      transition: 0.3s;
+    }
   }
 }
 
