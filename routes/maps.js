@@ -179,6 +179,7 @@ const mapsRouter = (db) => {
 
   // POST /maps/create
   router.post('/create', (req, res) => {
+
     const queryString = `
       INSERT INTO maps (creator_id, title, description, latitude, longitude, location)
       VALUES ($1, $2, $3, $4, $5, $6)
