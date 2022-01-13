@@ -23,7 +23,7 @@
     <div id="map">
       <script>
         const mapData = JSON.parse(document.querySelector('.hack').innerHTML);
-        console.log(mapData);
+
         const map = L.map('map').setView([mapData[0].map_lat, mapData[0].map_lng], 12);
 
         // google map tile

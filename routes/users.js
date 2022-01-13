@@ -22,7 +22,6 @@ app.use(cookieSession({
 }));
 
 const userRouter = (db) => {
-
   // GET /users/favourites
   router.get('/favourites', (req, res) => {
     if (!req.session.user_id) {
@@ -40,12 +39,10 @@ const userRouter = (db) => {
       return db
         .query(queryString, [req.session.user_id])
         .then((result) => {
-
           res.render('fav', {
             user: req.session.user_id,
             mapList: result.rows,
           });
-
         })
 
         .catch((err) => {
@@ -61,13 +58,13 @@ const userRouter = (db) => {
     const queryString = `
       INSERT INTO favourites (user_id, map_id)
             VALUES ($1, $2);`;
-    const values = [req.session.user_id,req.body.map_id];
+    const values = [req.session.user_id, req.body.map_id];
 
     db.query(queryString, values)
       .then((result) => {
         res
           .status(200)
-          .send({success:true});
+          .send({ success: true });
       })
       .catch((err) => {
         res
@@ -76,16 +73,16 @@ const userRouter = (db) => {
       });
   });
 
-  //POST  users/favourites/delete
+  // POST  users/favourites/delete
   router.post('/favourites/delete', (req, res) => {
     const queryString = `
     DELETE FROM favourites
     WHERE user_id =$1 AND map_id=$2;
     `;
-    const values = [req.session.user_id,req.body.map_id];
+    const values = [req.session.user_id, req.body.map_id];
     db.query(queryString, values)
       .then((result) => {
-        res.status(200).send({success:true});
+        res.status(200).send({ success: true });
         res.end();
       })
       .catch((err) => {
@@ -169,7 +166,6 @@ const userRouter = (db) => {
         });
     }
   });
-
 
   // GET /users/login
   router.get('/login/:id', (req, res) => {
