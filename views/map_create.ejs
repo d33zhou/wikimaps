@@ -40,19 +40,22 @@
     <div id="content-wrap">
       <section id="create-new">
         <section id="create-input-boxes">
-
           <h1>Create Map</h1>
+          <div class="map-form-add-point">
 
-          <form method="POST" action="/maps/create">
-            <input type="text" id="title" name="title" placeholder="Title" autofocus required>
-            <input type="text" id="location" name="location" placeholder="Location">
-            <div id="loc-coords">
-              <input class="form-control" type="text" id="latitude" name="latitude" value="43.657572963908336" required readonly>
-              <input class="form-control" type="text" id="longitude" name="longitude" value="-79.41145185759068" required readonly>
-            </div>
-            <textarea id="description" name="description" rows="5" placeholder="Description"></textarea>
-            <button type="submit" class="btn btn-primary">Create Map</button>
-          </form>
+            <form method="POST" action="/maps/create">
+              <input type="text" id="title" name="title" placeholder="Title" autofocus required>
+              <input type="text" id="location" name="location" placeholder="Location">
+              <div id="loc-coords">
+                <input class="form-control" type="text" id="map_lat" name="map_lat" value="43.657572963908336" required
+                  readonly>
+                <input class="form-control" type="text" id="map_lng" name="map_lng" value="-79.41145185759068" required
+                  readonly>
+              </div>
+              <textarea id="description" name="description" rows="5" placeholder="Description"></textarea>
+              <button type="submit" class="btn btn-primary">Create Map</button>
+            </form>
+          </div>
 
         </section>
 
@@ -65,26 +68,26 @@
 
               // maptiler
               L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=MSPwE9Jr5bzs11wgXA8F', {
-              attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-              maxZoom: 18,
-              id: 'mapbox/streets-v11',
-              tileSize: 512,
-              zoomOffset: -1,
-              accessToken: 'your.mapbox.access.token',
+                attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'your.mapbox.access.token',
               }).addTo(map);
 
               // google map tile
               L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-              maxZoom: 18,
-              subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+                maxZoom: 18,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
               }).addTo(map);
 
               // update map latitude and longitude to form when dragging map
               function onMapMove(e) {
                 const center = map.getBounds().getCenter();
 
-                document.getElementById("latitude").value = center.lat;
-                document.getElementById("longitude").value = center.lng;
+                document.getElementById("map_lat").value = center.lat;
+                document.getElementById("map_lng").value = center.lng;
               }
               map.on('move', onMapMove);
 
