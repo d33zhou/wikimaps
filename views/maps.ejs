@@ -59,8 +59,8 @@
           <div class="mapList-box">
             <div class="mapList-info">
 
-              <!-- generate map view based on map coordinates -->
-              <img src="/maps/map/lat/<%=mapList[i].latitude%>/lon/<%=mapList[i].longitude%>">
+              <!-- pull map view from saved images folder (map image generated on creation) -->
+              <img src="/images/maps/map-<%=mapList[i].id%>.png" alt="Map Image">
 
               <h3 class="mapList-title"><%= mapList[i].title %></h3>
               <p><%= mapList[i].description %></p>
