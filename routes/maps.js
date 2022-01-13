@@ -82,7 +82,7 @@ const mapsRouter = (db) => {
       });
   });
 
-  // TEST ROUTE
+  // GET /map/lat/<latitude>/lon/<longitude> --> create jpeg image at given coords
   router.get('/map/lat/:lat/lon/:lon', async (req, res) => {
 
     const map = new StaticMaps({
@@ -92,13 +92,8 @@ const mapsRouter = (db) => {
 
     const zoom = 12;
 
-    // -79.41145185759068, 43.657572963908336
     const latitude = Number(req.params.lat);
     const longitude = Number(req.params.lon);
-
-    console.log(typeof latitude);
-
-    console.log(latitude, longitude);
     const center = [longitude, latitude];
 
     await map.render(center, zoom);
