@@ -57,7 +57,9 @@
           <% for (let i = 0; i < Object.keys(mapList).length; i++) { %>
           <div class="mapList-box">
             <div class="mapList-info">
-              <img src="/images/Toronto-map.png">
+
+              <img src="/maps/map-testing">
+
               <h3 class="mapList-title"><%= mapList[i].title %></h3>
               <p><%= mapList[i].description %></p>
               <p>Created by: <a href="/users/contributions/<%= mapList[i].creator_id %>"><%= mapList[i].created_by %></a></p>

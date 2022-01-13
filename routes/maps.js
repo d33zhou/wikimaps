@@ -23,6 +23,8 @@ app.use(cookieSession({
   keys: ['key1', 'key2'],
 }));
 
+const StaticMaps = require('staticmaps');
+
 const mapsRouter = (db) => {
   //-----------------------------------------------------
   // GET METHODS ----------------------------------------
@@ -78,6 +80,54 @@ const mapsRouter = (db) => {
       .render('map_create', {
         user: req.session.user_id,
       });
+  });
+
+  // TEST ROUTE
+  router.get('/map-testing', async (req, res) => {
+
+
+    const map = new StaticMaps({
+      width: 600,
+      height: 400,
+    });
+
+    const center = [-79.41145185759068, 43.657572963908336];
+    const zoom = 12;
+
+    // toronto: -79.41145185759068, 43.657572963908336
+    // vancouver: -123.1027425, 49.2681933
+
+    // let map_position = [43.657572963908336, -79.41145185759068].join(",");
+
+    // let image_url = StaticMaps.baseHost
+    //         .concat('/staticmap?center=#MAP_LOCATION&zoom=16&scale=1&size=260x200&maptype=roadmap&format=jpg&visual_refresh=true')
+    //         .replace('#MAP_LOCATION', map_position);
+
+    //console.log(map);
+
+    await map.render(center, zoom);
+
+    // await map.image.save('center.png');
+
+    map.image.buffer('image/jpeg', { quality: 75 })
+      .then(buffer => {
+        // res.send(buffer);
+        res.write(buffer,'binary');
+        res.end(null, 'binary');
+      });
+
+    //request(image_url).pipe(res);
+
+
+    //await map.render();
+
+
+    //res.send('map-test2', { map });
+
+
+
+
+    // map.image.save('center.png');
   });
 
   // GET /maps/ --> redirect to GET /maps/1 (page 1 search results default)
