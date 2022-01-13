@@ -263,6 +263,26 @@ const mapsRouter = (db) => {
       });
   });
 
+  // POST /maps/search
+  router.post('/search',(req,res) => {
+    const queryString =
+    `SELECT title
+    FROM maps
+    WHERE title LIKE '%'||$1||'%'
+    LIMIT 3;
+    `;
+    console.log(req.body.input);
+    db.query(queryString,[req.body.input])
+      .then(result => {
+        console.log('queried the db',result.rows);
+        res.send(result.rows);
+      })
+      .catch(err => {
+        console.log('Error',err.message);
+      });
+
+  });
+
   return router;
 };
 

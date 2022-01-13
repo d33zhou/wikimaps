@@ -28,7 +28,7 @@ $(document).ready(() => {
     const input = $(this).val();
     console.log(input);
     $.post('/maps/search',{input},(data) => {
-      console.log('posted',data);
+      $('#search-result-container').html('<a href="#" class="search-result">data[0].title</a>');
     });
   });
 });
