@@ -24,12 +24,22 @@ $(document).ready(() => {
         });
     }
   });
+  $('#search-result-container').hide();
   $('.search-box').on('keyup',function(event) {
     const input = $(this).val();
-    console.log(input);
-    $.post('/maps/search',{input},(data) => {
-      $('#search-result-container').html('<a href="#" class="search-result">data[0].title</a>');
-    });
+    if (input !== "") {
+      $('#search-result-container').show();
+      console.log(input);
+      $.post('/maps/search',{input},(data) => {
+        for (let i = 0; i < Object.keys(data).length; i++) {
+          console.log(data);
+          $('#search-result-container').append(`<a href="http://localhost:8080/maps/map/${data[i].id}" class="search-result">${data[i].title}</a>`);
+        }
+      });
+    } else if (input === "") {
+      $('#search-result-container').hide();
+    }
+
   });
 });
 

@@ -266,7 +266,7 @@ const mapsRouter = (db) => {
   // POST /maps/search
   router.post('/search',(req,res) => {
     const queryString =
-    `SELECT title
+    `SELECT title,id
     FROM maps
     WHERE title LIKE '%'||$1||'%'
     LIMIT 3;
