@@ -16,6 +16,8 @@ insert into maps (creator_id, title, description, latitude, longitude, location)
 insert into maps (creator_id, title, description, latitude, longitude, location) values (8, 'ipsum', 'Aliquam non mauris. Morbi non lectus.', 43.657572963908336, -79.41145185759068, 'Toronto');
 insert into maps (creator_id, title, description, latitude, longitude, location) values (9, 'a suscipit', 'Etiam pretium iaculis justo.', 43.657572963908336, -79.41145185759068, 'Toronto');
 insert into maps (creator_id, title, description, latitude, longitude, location) values (14, 'tempus vivamus in', 'Sed ante. Vivamus tortor.', 43.657572963908336, -79.41145185759068, 'Toronto');
+insert into maps (creator_id, title, description, latitude, longitude, location) values (1, 'West Coast Seafood', 'Out by the ocean, some great places to enjoy some local delights!', 49.28098833796322, -123.11051174998285, 'Vancouver');
+insert into maps (creator_id, title, description, latitude, longitude, location) values (1, 'Best Outlet Shops', 'There is always room for more!', 43.59056012078082, -79.64134097099306, 'Mississauga');
 
 -- update more meaningful content
 UPDATE maps
