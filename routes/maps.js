@@ -23,6 +23,8 @@ app.use(cookieSession({
   keys: ['key1', 'key2'],
 }));
 
+const StaticMaps = require('staticmaps');
+
 const mapsRouter = (db) => {
   //-----------------------------------------------------
   // GET METHODS ----------------------------------------
@@ -31,7 +33,14 @@ const mapsRouter = (db) => {
   // GET /maps/map/:id
   router.get('/map/:id', (req, res) => {
     const queryString = `
-      SELECT maps.*,
+      SELECT
+        maps.id,
+        maps.creator_id,
+        maps.title,
+        maps.description,
+        maps.latitude AS map_lat,
+        maps.longitude AS map_lng,
+        maps.location AS map_loc,
         users.name AS created_by,
         points.title AS point_name,
         points.description AS point_description,
@@ -54,6 +63,7 @@ const mapsRouter = (db) => {
       .then((result1) => {
         db.query(queryString, [req.params.id])
           .then((result) => {
+            console.log(result.rows)
             res.render('map_id', {
               user: req.session.user_id,
               mapData: result.rows,
@@ -79,6 +89,32 @@ const mapsRouter = (db) => {
       .render('map_create', {
         user: req.session.user_id,
       });
+  });
+
+  // GET /map/lat/<latitude>/lon/<longitude> --> create jpeg image at given coords
+  router.get('/map/lat/:lat/lon/:lon', async (req, res) => {
+
+    const map = new StaticMaps({
+      width: 600,
+      height: 400,
+    });
+
+    const zoom = 12;
+
+    const latitude = Number(req.params.lat);
+    const longitude = Number(req.params.lon);
+    const center = [longitude, latitude];
+
+    await map.render(center, zoom);
+
+    // await map.image.save('center.png');
+
+    map.image.buffer('image/jpeg', { quality: 75 })
+      .then(buffer => {
+        res.write(buffer, 'binary');
+        res.end(null, 'binary');
+      });
+
   });
 
   // GET /maps/ --> redirect to GET /maps/1 (page 1 search results default)
@@ -110,25 +146,6 @@ const mapsRouter = (db) => {
     SELECT map_id
     FROM favourites
     WHERE user_id = $1;`;
-
-    // db
-    //   .query(queryString1,[req.session.user_id])
-    //   .then(result1 => result1.rows)
-    //   .then((result1) => {
-    //     db.query(queryString)
-    //       .then((result) => {
-    //         res.render('maps', {
-    //           user: req.session.user_id,
-    //           mapList: result.rows,
-    //           favMapsObj:result1,
-    //         });
-    //       })
-    //       .catch((err) => {
-    //         res
-    //           .status(500)
-    //           .json({ error: err.message });
-    //       });
-    //   });
 
     // first query, to obtain total map records (for page navigation)
     db
@@ -170,11 +187,19 @@ const mapsRouter = (db) => {
 
   // POST /maps/create
   router.post('/create', (req, res) => {
+
     const queryString = `
-      INSERT INTO maps (creator_id, title, description)
-      VALUES ($1, $2, $3)
+      INSERT INTO maps (creator_id, title, description, latitude, longitude, location)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id;`;
-    const values = [req.session.user_id, req.body.title, req.body.description];
+    const values = [
+      req.session.user_id,
+      req.body.title,
+      req.body.description,
+      req.body.latitude,
+      req.body.longitude,
+      req.body.location
+    ];
 
     db.query(queryString, values)
       .then((result) => {

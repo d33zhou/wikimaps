@@ -64,7 +64,7 @@
           <script>
             const mapData = JSON.parse(document.querySelector('.hack').innerHTML);
             console.log(mapData);
-            const map = L.map('map').setView([43.657572963908336, -79.41145185759068], 12);
+            const map = L.map('map').setView([mapData[0].map_lat, mapData[0].map_lng], 12);
 
             // google map tile
             L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
@@ -152,6 +152,7 @@
           </div>
         </div>
         <div class="mapList-container">
+          <% if (mapData[0].point_name) { %>
           <% for (let i = 0; i < Object.keys(mapData).length; i++) { %>
           <div class="mapList-box">
             <div class="mapList-info">
@@ -164,6 +165,8 @@
             </div>
           </div>
           <% } %>
+          <% } %>
+
         </div>
       </div>
       <%- include('partials/_footer') %>

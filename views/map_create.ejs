@@ -44,11 +44,11 @@
           <h1>Create Map</h1>
 
           <form method="POST" action="/maps/create">
-            <input type="text" id="title" name="title" placeholder="Title">
-            <input type="text" id="city" name="city" placeholder="Location">
+            <input type="text" id="title" name="title" placeholder="Title" autofocus required>
+            <input type="text" id="location" name="location" placeholder="Location">
             <div id="loc-coords">
-              <input class="form-control" type="text" id="loc-lat" name="loc-lat" placeholder="Latitude" disabled readonly>
-              <input class="form-control" type="text" id="loc-long" name="loc-long" placeholder="Longitude" disabled readonly>
+              <input class="form-control" type="text" id="latitude" name="latitude" value="43.657572963908336" required readonly>
+              <input class="form-control" type="text" id="longitude" name="longitude" value="-79.41145185759068" required readonly>
             </div>
             <textarea id="description" name="description" rows="5" placeholder="Description"></textarea>
             <button type="submit" class="btn btn-primary">Create Map</button>
@@ -59,7 +59,9 @@
         <section id="create-map-view">
           <div id="map">
             <script>
-              const map = L.map('map').setView([43.657572963908336, -79.41145185759068], 12);
+              let mapLat = 43.657572963908336;
+              let mapLng = -79.41145185759068;
+              const map = L.map('map').setView([mapLat, mapLng], 12);
 
               // maptiler
               L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=MSPwE9Jr5bzs11wgXA8F', {
@@ -76,7 +78,18 @@
               maxZoom: 18,
               subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
               }).addTo(map);
+
+              // update map latitude and longitude to form when dragging map
+              function onMapMove(e) {
+                const center = map.getBounds().getCenter();
+
+                document.getElementById("latitude").value = center.lat;
+                document.getElementById("longitude").value = center.lng;
+              }
+              map.on('move', onMapMove);
+
             </script>
+
           </div>
         </section>
 
