@@ -111,11 +111,14 @@ const mapsRouter = (db) => {
 
     await map.image.save(`public/images/maps/map-${mapID}.png`);
 
-    map.image.buffer('image/jpeg', { quality: 75 })
-      .then(buffer => {
-        res.write(buffer, 'binary');
-        res.end(null, 'binary');
-      });
+    res.redirect(`/maps/map/${mapID}`);
+
+    // ---to view the image on the page---
+    // map.image.buffer('image/jpeg', { quality: 75 })
+    //   .then(buffer => {
+    //     // res.write(buffer, 'binary');
+    //     // res.end(null, 'binary');
+    //   });
 
   });
 
@@ -198,8 +201,8 @@ const mapsRouter = (db) => {
       req.session.user_id,
       req.body.title,
       req.body.description,
-      req.body.latitude,
-      req.body.longitude,
+      req.body.map_lat,
+      req.body.map_lng,
       req.body.location
     ];
 
@@ -207,7 +210,7 @@ const mapsRouter = (db) => {
       .then((result) => {
         res
           .status(200)
-          .redirect(`/maps/map/${result.rows[0].id}`);
+          .redirect(`/maps/map/${result.rows[0].id}/lat/${req.body.map_lat}/lng/${req.body.map_lng}`);
       })
       .catch((err) => {
         res
