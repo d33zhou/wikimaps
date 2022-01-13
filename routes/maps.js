@@ -91,8 +91,8 @@ const mapsRouter = (db) => {
       });
   });
 
-  // GET /map/lat/<latitude>/lon/<longitude> --> create jpeg image at given coords
-  router.get('/map/lat/:lat/lon/:lon', async (req, res) => {
+  // GET /map/<id>/lat/<latitude>/lng/<longitude> --> create jpeg image at given coords
+  router.get('/map/:id/lat/:lat/lng/:lng', async (req, res) => {
 
     const map = new StaticMaps({
       width: 600,
@@ -102,12 +102,14 @@ const mapsRouter = (db) => {
     const zoom = 12;
 
     const latitude = Number(req.params.lat);
-    const longitude = Number(req.params.lon);
+    const longitude = Number(req.params.lng);
     const center = [longitude, latitude];
+
+    const mapID = req.params.id;
 
     await map.render(center, zoom);
 
-    // await map.image.save('center.png');
+    await map.image.save(`public/images/maps/map-${mapID}.png`);
 
     map.image.buffer('image/jpeg', { quality: 75 })
       .then(buffer => {
