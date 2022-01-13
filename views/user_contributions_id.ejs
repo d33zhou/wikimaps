@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Wiki Maps-Your Contributions</title>
+  <title>Wiki Maps-Profile</title>
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -36,7 +36,7 @@
     <%- include('partials/_header') %>
     <div id="content-wrap">
       <div class="container mt-4">
-        <h1>Contributions</h1>
+        <h1><%- contributionsMaps[0].name %>'s Profile</h1>
         <h2>Maps</h2>
         <div class="mapList-container">
 
@@ -61,8 +61,7 @@
           <div class="mapList-box">
             <div class="mapList-info">
 
-              <img class="mapList-img mapList-img_<%= contributions[i].id %>" src="<%= contributions[i].image %>"
-                alt="">
+              <img class="mapList-img_<%= contributions[i].id %>" src="<%= contributions[i].image %>" alt="">
               <div class="point-info_<%= contributions[i].id %>">
 
                 <h3 class="mapList-title_<%= contributions[i].id %>"><%= contributions[i].title %></h3>
@@ -85,8 +84,7 @@
                   value="<%= contributions[i].latitude %>">
                 <input type="text" name="point_lng" id="point_lng<%= contributions[i].id %>" cols="30" rows="10"
                   value="<%= contributions[i].longitude %>">
-                <button type="submit" data-point_id="<%= contributions[i].id %>"
-                  class="btn btn-success btn-sm">Save</button>
+                <button type="submit" data-point_id="<%= contributions[i].id %>">Save</button>
               </form>
             </div>
 
@@ -95,12 +93,6 @@
               <a type="button" class="btn btn-primary btn-sm mapList-btn"
                 href="/maps/map/<%= contributions[i].map_id %>">View
                 Map</a>
-
-              <button class="btn btn-sm btn-warning mapList-btn point_edit"
-                data-point_id="<%= contributions[i].id %>">Edit</button>
-
-              <button class="btn-danger btn btn-sm mapList-btn point_delete"
-                data-point_id="<%= contributions[i].id %>">Remove</button>
 
             </div>
           </div>

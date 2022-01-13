@@ -132,6 +132,45 @@ const userRouter = (db) => {
     }
   });
 
+  // GET /users/contributions/:id
+  router.get('/contributions/:id', (req, res) => {
+    if (!req.session.user_id) {
+      res.redirect('/');
+    } else {
+      const queryString = `
+      SELECT *
+      FROM points
+      WHERE creator_id = $1
+      ORDER BY id DESC;
+      `;
+      const queryString1 = `
+          SELECT maps.*, users.name
+          FROM maps
+          JOIN users ON maps.creator_id = users.id
+          WHERE creator_id = $1
+          ORDER BY id DESC;
+        `;
+      db.query(queryString1, [req.params.id])
+        .then((result1) => result1.rows)
+        .then((result1) => {
+          db.query(queryString, [req.params.id])
+            .then((result) => {
+              res.render('user_contributions_id', {
+                user: req.session.user_id,
+                contributions: result.rows,
+                contributionsMaps: result1,
+              });
+            })
+            .catch((err) => {
+              res
+                .status(500)
+                .json({ error: err.message });
+            });
+        });
+    }
+  });
+
+
   // GET /users/login
   router.get('/login/:id', (req, res) => {
     // assign cookie credentials

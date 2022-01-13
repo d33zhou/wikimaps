@@ -43,7 +43,8 @@ const mapsRouter = (db) => {
       FROM maps
        JOIN users ON users.id = maps.creator_id
        LEFT JOIN points ON points.map_id = maps.id
-       WHERE maps.id = $1;
+       WHERE maps.id = $1
+       ORDER BY points.id desc ;
       `;
     const queryString1 = `
   SELECT map_id

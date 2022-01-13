@@ -38,9 +38,18 @@ $cream:#E7EFF6;
   .nav-links {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    padding-left: 3em;
-    gap: 4em;
+    // justify-content: space-around;
+    // padding-left: 3em;
+    // gap: 4em;
+
+    & a {
+      width: 200px;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    & a:hover {
+      font-weight: bold;
+    }
   }
 
   .nav-buttons {
