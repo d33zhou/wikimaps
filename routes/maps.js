@@ -112,6 +112,45 @@ const mapsRouter = (db) => {
     res.redirect(`/maps/map/${mapID}`);
   });
 
+  // GET /maps/download-all --> download all map images for maps in DB
+  router.get('/download-all', (req, res) => {
+
+    async function saveImage(mapObject) {
+
+      const map = new StaticMaps({
+        width: 600,
+        height: 400,
+      });
+
+      const zoom = 12;
+
+      const latitude = Number(mapObject.latitude);
+      const longitude = Number(mapObject.longitude);
+      const center = [longitude, latitude];
+
+      const mapID = mapObject.id;
+
+      await map.render(center, zoom);
+      await map.image.save(`public/images/maps/map-${mapID}.png`);
+    }
+
+    const queryString = `SELECT * FROM maps;`;
+
+    db
+      .query(queryString)
+      .then(records => {
+
+        records.rows.forEach(element => {
+          saveImage(element)
+          console.log(`Saved map: map-${element.id}.png`);
+        });
+      })
+      .then(() => {
+        console.log('Save completed')
+        res.send('All maps downloaded to /images/maps/...');
+      })
+  });
+
   // GET /maps/ --> redirect to GET /maps/1 (page 1 search results default)
   router.get('/', (req, res) => {
     res.redirect('/maps/1');
